@@ -11,22 +11,22 @@
 </head>
 <body class="bg-gray-100 text-gray-800">
     <!-- Navbar -->
-    <header class="bg-gradient-to-r from-green-600 to-green-500 shadow-lg relative z-50">
+    <header class="bg-white shadow-lg relative z-50">
         <div class="w-full mx-auto flex items-center justify-between md:px-20 md:py-5 px-6 py-4">
             <!-- Logo & Brand -->
             <div class="flex items-center gap-3">
                 <div class="h-12 w-12 md:h-14 md:w-14 bg-white rounded-full shadow-md flex items-center justify-center">
-                    <img src="/images/logo.png" alt="Logo" class="object-cover h-10 w-10 md:h-12 md:w-12 rounded-full">
+                    <img src="{% static 'images/logo.png' %}" alt="Logo" class="object-cover ">
                 </div>
-                <span class="text-xl md:text-2xl font-bold text-white">Daillyfresh</span>
+                <span class="text-xl md:text-2xl font-bold">Daillyfresh</span>
             </div>
             
             <!-- Desktop Nav -->
             <nav class="hidden md:flex items-center gap-8 ml-auto">
-                <a href="#home" class="text-white font-semibold text-sm hover:text-green-100 transition-colors duration-200">HOME</a>
-                <a href="#about" class="text-green-50 font-semibold text-sm hover:text-white transition-colors duration-200">ABOUT US</a>
-                <a href="#product" class="text-green-50 font-semibold text-sm hover:text-white transition-colors duration-200">PRODUCT</a>
-                <a href="#call" class="bg-white text-green-600 font-bold px-6 py-2.5 rounded-lg hover:bg-green-50 shadow-md transition-all duration-200 text-sm">CALL US</a>
+                <a href="#home" class="font-semibold text-sm hover:text-green-600 transition-colors duration-200">HOME</a>
+                <a href="#about" class="font-semibold text-sm hover:text-green-600 transition-colors duration-200">ABOUT US</a>
+                <a href="#product" class="font-semibold text-sm hover:text-green-600 transition-colors duration-200">PRODUCT</a>
+                <a href="#call" class="text-green-600 font-bold px-6 py-2.5 rounded-lg hover:bg-green-100 shadow-md transition-all duration-200 text-sm">CALL US</a>
             </nav>
             
             <!-- Hamburger for mobile -->
