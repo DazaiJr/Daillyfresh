@@ -2,9 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.views.decorators.http import require_http_methods
+from .models import Product
 
 def home(request):
-    return render(request, 'index.html')
+    products = Product.objects.filter(is_active=True)
+    return render(request, 'index.html', {'products': products})
 
 def login(request):
     return render(request,'login.html')
