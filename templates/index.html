@@ -2,56 +2,92 @@
 
 <section
   id="home"
-  class="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden bg-[#0a2f15] min-h-[90vh] flex items-center"
+  class="relative w-full h-[600px] md:h-[700px] overflow-hidden"
+  x-data="{
+    activeSlide: 1,
+    slides: [
+        {
+            id: 1,
+            image: '{% static 'images/slider-1.png' %}', 
+            title: 'Nourishing your Family with Pure, Farm-fresh Goodness',
+            subtitle: 'Straight from the farm to your fridge. 100% natural and antibiotic-free.',
+            showButton: true
+        },
+        {
+            id: 2,
+            image: '{% static 'images/slider-2.png' %}',
+            title: 'The Taste of Real Purity',
+            subtitle: 'Experience the richness of fresh cow and buffalo milk delivered daily.',
+            showButton: false 
+        },
+        {
+            id: 3,
+            image: '{% static 'images/slider-3.png' %}',
+            title: 'Healthy Kids, Happy Future',
+            subtitle: 'Rich in nutrients, perfect for your growing child\'s health.',
+            showButton: true
+        }
+    ],
+    loop() {
+        setInterval(() => {
+            this.activeSlide = this.activeSlide === 3 ? 1 : this.activeSlide + 1
+        }, 5000)
+    }
+}"
+  x-init="loop()"
 >
-  <div
-    class="absolute inset-0 opacity-10 bg-[url('{% static 'images/farm-pattern.png' %}')] bg-repeat pointer-events-none"
-  ></div>
-
-  <div
-    class="container mx-auto px-6 flex flex-col-reverse md:flex-row items-center gap-12 relative z-10"
-  >
-    <div class="w-full md:w-1/2 text-white space-y-6 animate-fade-in-up">
-      <h1
-        class="text-4xl md:text-5xl lg:text-6xl font-display font-extrabold leading-tight"
-      >
-        Nourishing your Family with Pure,
-        <span
-          class="block mt-2 text-[#84cc16] bg-white/10 px-4 py-2 rounded-lg inline-block backdrop-blur-sm"
-          >Farm-fresh Goodness</span
-        >
-        Everyday
-      </h1>
-      <p
-        class="text-lg text-green-100/90 max-w-lg leading-relaxed hidden md:block"
-      >
-        Straight from the farm to your fridge. Experience the difference of 100%
-        natural, antibiotic-free dairy products delivered directly to your
-        doorstep.
-      </p>
-      <div class="pt-4 flex gap-4">
-        <a
-          href="#products"
-          class="px-8 py-4 bg-[#16a34a] text-white rounded-full font-bold shadow-lg shadow-green-900/30 hover:bg-[#84cc16] transition-all transform hover:-translate-y-1 inline-flex items-center gap-2"
-        >
-          Order Now <i class="ri-arrow-right-line"></i>
-        </a>
-      </div>
-    </div>
-
+  <template x-for="slide in slides" :key="slide.id">
     <div
-      class="w-full md:w-1/2 flex justify-center md:justify-end animate-fade-in-up delay-200 relative"
+      x-show="activeSlide === slide.id"
+      x-transition:enter="transition transform duration-1000 ease-in-out"
+      x-transition:enter-start="opacity-0 scale-105"
+      x-transition:enter-end="opacity-100 scale-100"
+      x-transition:leave="transition transform duration-1000 ease-in-out"
+      x-transition:leave-start="opacity-100 scale-100"
+      x-transition:leave-end="opacity-0 scale-100"
+      class="absolute inset-0 w-full h-full bg-cover bg-center"
+      :style="`background-image: url('${slide.image}');`"
     >
       <div
-        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-[#84cc16]/20 blur-3xl rounded-full -z-10"
+        class="absolute inset-0 bg-black/40 bg-gradient-to-r from-black/70 to-transparent"
       ></div>
 
-      <img
-        src="{% static 'images/hero-products.png' %}"
-        alt="Daillyfresh Milk and Eggs"
-        class="w-full max-w-xl object-contain drop-shadow-[0_25px_35px_rgba(0,0,0,0.5)] transform hover:scale-105 transition-transform duration-500"
-      />
+      <div class="absolute inset-0 flex items-center">
+        <div class="container mx-auto px-6 md:px-12">
+          <div class="max-w-2xl text-white space-y-6 animate-fade-in-up">
+            <h1
+              class="text-4xl md:text-6xl font-display font-extrabold leading-tight shadow-sm"
+              x-text="slide.title"
+            ></h1>
+            <p
+              class="text-lg md:text-2xl text-green-50 font-medium"
+              x-text="slide.subtitle"
+            ></p>
+
+            <div x-show="slide.showButton" class="pt-4">
+              <a
+                href="#products"
+                class="px-8 py-4 bg-[#16a34a] text-white rounded-full font-bold shadow-lg hover:bg-[#84cc16] transition-all transform hover:-translate-y-1 inline-flex items-center gap-2"
+              >
+                Order Now <i class="ri-arrow-right-line"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </template>
+
+  <div
+    class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-3 z-20"
+  >
+    <template x-for="slide in slides" :key="slide.id">
+      <button
+        @click="activeSlide = slide.id"
+        class="w-3 h-3 rounded-full transition-all duration-300"
+        :class="activeSlide === slide.id ? 'bg-[#16a34a] w-8' : 'bg-white/50 hover:bg-white'"
+      ></button>
+    </template>
   </div>
 </section>
 
@@ -252,135 +288,108 @@
       </h2>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto"
+    >
       <div
-        class="bg-white rounded-3xl p-6 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group animate-fade-in-up flex flex-col"
+        class="bg-white rounded-[3rem] p-8 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group animate-fade-in-up flex flex-col border border-gray-50 overflow-hidden relative"
       >
-        <div
-          class="h-64 flex items-center justify-center mb-6 relative bg-gradient-to-b from-white to-gray-50 rounded-2xl p-4"
-        >
+        <div class="h-80 flex items-center justify-center mb-6 relative">
           <img
             src="{% static 'images/product-cow-milk.png' %}"
             alt="Cow Milk"
-            class="h-56 object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-xl"
+            class="w-full max-w-[90%] h-auto object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-2xl"
           />
         </div>
-        <h3 class="text-2xl font-bold text-[#0a2f15] text-center">Cow Milk</h3>
-        <p class="text-gray-600 text-center mt-2 flex-grow text-sm">
+
+        <h3 class="text-3xl font-bold text-[#0a2f15] text-center relative z-10">
+          Cow Milk
+        </h3>
+        <p
+          class="text-gray-600 text-center mt-3 flex-grow text-lg relative z-10"
+        >
           Fresh and pure cow's milk in its original form.
         </p>
-        <div class="mt-6 text-center">
-          <span class="text-2xl font-bold text-[#16a34a]"
+        <div class="mt-8 text-center relative z-10">
+          <span class="text-4xl font-bold text-[#16a34a]"
             >₹75
-            <span class="text-sm text-gray-500 font-normal"
+            <span class="text-xl text-gray-500 font-normal"
               >/ 1000 ml</span
             ></span
           >
         </div>
         <button
-          class="w-full mt-6 bg-[#0a2f15] text-white py-3 rounded-full font-bold hover:bg-[#16a34a] transition-colors flex items-center justify-center gap-2"
+          class="w-full mt-8 bg-[#0a2f15] text-white py-4 rounded-full font-bold hover:bg-[#16a34a] transition-colors flex items-center justify-center gap-2 text-lg relative z-10"
         >
           <i class="ri-shopping-cart-fill"></i> Add to Cart
         </button>
       </div>
 
       <div
-        class="bg-white rounded-3xl p-6 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group animate-fade-in-up flex flex-col"
+        class="bg-white rounded-[3rem] p-8 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group animate-fade-in-up flex flex-col border border-gray-50 overflow-hidden relative"
         style="animation-delay: 0.1s"
       >
-        <div
-          class="h-64 flex items-center justify-center mb-6 relative bg-gradient-to-b from-white to-gray-50 rounded-2xl p-4"
-        >
+        <div class="h-80 flex items-center justify-center mb-6 relative">
           <img
             src="{% static 'images/product-buffalo-milk.png' %}"
             alt="Buffalo Milk"
-            class="h-56 object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-xl"
+            class="w-full max-w-[90%] h-auto object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-2xl"
           />
         </div>
-        <h3 class="text-2xl font-bold text-[#0a2f15] text-center">
+        <h3 class="text-3xl font-bold text-[#0a2f15] text-center relative z-10">
           Buffalo Milk
         </h3>
-        <p class="text-gray-600 text-center mt-2 flex-grow text-sm">
+        <p
+          class="text-gray-600 text-center mt-3 flex-grow text-lg relative z-10"
+        >
           Fresh buffalo milk, full-bodied and unaltered.
         </p>
-        <div class="mt-6 text-center">
-          <span class="text-2xl font-bold text-[#16a34a]"
+        <div class="mt-8 text-center relative z-10">
+          <span class="text-4xl font-bold text-[#16a34a]"
             >₹90
-            <span class="text-sm text-gray-500 font-normal"
+            <span class="text-xl text-gray-500 font-normal"
               >/ 1000 ml</span
             ></span
           >
         </div>
         <button
-          class="w-full mt-6 bg-[#0a2f15] text-white py-3 rounded-full font-bold hover:bg-[#16a34a] transition-colors flex items-center justify-center gap-2"
+          class="w-full mt-8 bg-[#0a2f15] text-white py-4 rounded-full font-bold hover:bg-[#16a34a] transition-colors flex items-center justify-center gap-2 text-lg relative z-10"
         >
           <i class="ri-shopping-cart-fill"></i> Add to Cart
         </button>
       </div>
 
       <div
-        class="bg-white rounded-3xl p-6 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group animate-fade-in-up flex flex-col"
+        class="bg-white rounded-[3rem] p-8 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group animate-fade-in-up flex flex-col border border-gray-50 overflow-hidden relative"
         style="animation-delay: 0.2s"
       >
-        <div
-          class="h-64 flex items-center justify-center mb-6 relative bg-gradient-to-b from-white to-gray-50 rounded-2xl p-4"
-        >
+        <div class="h-80 flex items-center justify-center mb-6 relative">
           <span
-            class="absolute top-2 right-2 bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full shadow-sm z-10"
+            class="absolute top-0 right-0 bg-yellow-400 text-black text-sm font-bold px-5 py-2 rounded-full shadow-md z-20"
             >Best Seller</span
           >
           <img
             src="{% static 'images/product-eggs.png' %}"
             alt="Power Eggs"
-            class="h-48 object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-xl"
+            class="w-full max-w-[90%] h-auto object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-2xl"
           />
         </div>
-        <h3 class="text-2xl font-bold text-[#0a2f15] text-center">
+        <h3 class="text-3xl font-bold text-[#0a2f15] text-center relative z-10">
           Power Eggs
         </h3>
-        <p class="text-gray-600 text-center mt-2 flex-grow text-sm">
+        <p
+          class="text-gray-600 text-center mt-3 flex-grow text-lg relative z-10"
+        >
           Protein Rich | Antibiotic-free | 100% Fresh.
         </p>
-        <div class="mt-6 text-center">
-          <span class="text-2xl font-bold text-[#16a34a]"
+        <div class="mt-8 text-center relative z-10">
+          <span class="text-4xl font-bold text-[#16a34a]"
             >₹90
-            <span class="text-sm text-gray-500 font-normal">/ 6 pcs</span></span
+            <span class="text-xl text-gray-500 font-normal">/ 6 pcs</span></span
           >
         </div>
         <button
-          class="w-full mt-6 bg-[#0a2f15] text-white py-3 rounded-full font-bold hover:bg-[#16a34a] transition-colors flex items-center justify-center gap-2"
-        >
-          <i class="ri-shopping-cart-fill"></i> Add to Cart
-        </button>
-      </div>
-
-      <div
-        class="bg-white rounded-3xl p-6 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group animate-fade-in-up flex flex-col"
-        style="animation-delay: 0.3s"
-      >
-        <div
-          class="h-64 flex items-center justify-center mb-6 relative bg-gradient-to-b from-white to-gray-50 rounded-2xl p-4"
-        >
-          <img
-            src="{% static 'images/product-ghee.png' %}"
-            alt="Desi Cow Ghee"
-            class="h-48 object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-xl"
-          />
-        </div>
-        <h3 class="text-2xl font-bold text-[#0a2f15] text-center">
-          Desi Cow Ghee
-        </h3>
-        <p class="text-gray-600 text-center mt-2 flex-grow text-sm">
-          Traditional, aromatic, golden ghee.
-        </p>
-        <div class="mt-6 text-center">
-          <span class="text-2xl font-bold text-[#16a34a]"
-            >₹1200
-            <span class="text-sm text-gray-500 font-normal">/ 1 kg</span></span
-          >
-        </div>
-        <button
-          class="w-full mt-6 bg-[#0a2f15] text-white py-3 rounded-full font-bold hover:bg-[#16a34a] transition-colors flex items-center justify-center gap-2"
+          class="w-full mt-8 bg-[#0a2f15] text-white py-4 rounded-full font-bold hover:bg-[#16a34a] transition-colors flex items-center justify-center gap-2 text-lg relative z-10"
         >
           <i class="ri-shopping-cart-fill"></i> Add to Cart
         </button>
@@ -411,22 +420,22 @@
       class="flex items-center gap-20 md:gap-32 animate-marquee whitespace-nowrap min-w-full py-4"
     >
       <img
-        src="{% static 'images/partner-zepto.jpeg' %}"
+        src="{% static 'images/partner-zepto.png' %}"
         alt="Zepto"
         class="h-20 md:h-28 w-auto object-contain hover:scale-110 transition-transform duration-300"
       />
       <img
-        src="{% static 'images/partner-blinkit.jpg' %}"
+        src="{% static 'images/partner-blinkit.png' %}"
         alt="Blinkit"
         class="h-20 md:h-28 w-auto object-contain hover:scale-110 transition-transform duration-300"
       />
       <img
-        src="{% static 'images/partner-bigbasket.png' %}"
+        src="{% static 'images/partner-bb.png' %}"
         alt="BigBasket"
         class="h-20 md:h-28 w-auto object-contain hover:scale-110 transition-transform duration-300"
       />
       <img
-        src="{% static 'images/partner-freshtohome.jpg' %}"
+        src="{% static 'images/partner-freshtohome.png' %}"
         alt="FreshToHome"
         class="h-20 md:h-28 w-auto object-contain hover:scale-110 transition-transform duration-300"
       />
@@ -437,22 +446,22 @@
       />
 
       <img
-        src="{% static 'images/partner-zepto.jpeg' %}"
+        src="{% static 'images/partner-zepto.png' %}"
         alt="Zepto"
         class="h-20 md:h-28 w-auto object-contain hover:scale-110 transition-transform duration-300"
       />
       <img
-        src="{% static 'images/partner-blinkit.jpg' %}"
+        src="{% static 'images/partner-blinkit.png' %}"
         alt="Blinkit"
         class="h-20 md:h-28 w-auto object-contain hover:scale-110 transition-transform duration-300"
       />
       <img
-        src="{% static 'images/partner-bigbasket.png' %}"
+        src="{% static 'images/partner-bb.png' %}"
         alt="BigBasket"
         class="h-20 md:h-28 w-auto object-contain hover:scale-110 transition-transform duration-300"
       />
       <img
-        src="{% static 'images/partner-freshtohome.jpg' %}"
+        src="{% static 'images/partner-freshtohome.png' %}"
         alt="FreshToHome"
         class="h-20 md:h-28 w-auto object-contain hover:scale-110 transition-transform duration-300"
       />
@@ -463,12 +472,12 @@
       />
 
       <img
-        src="{% static 'images/partner-zepto.jpeg' %}"
+        src="{% static 'images/partner-zepto.png' %}"
         alt="Zepto"
         class="h-20 md:h-28 w-auto object-contain hover:scale-110 transition-transform duration-300"
       />
       <img
-        src="{% static 'images/partner-blinkit.jpg' %}"
+        src="{% static 'images/partner-blinkit.png' %}"
         alt="Blinkit"
         class="h-20 md:h-28 w-auto object-contain hover:scale-110 transition-transform duration-300"
       />
@@ -495,6 +504,13 @@
       <div
         class="bg-white p-8 rounded-3xl border-2 border-[#16a34a]/20 shadow-lg relative animate-fade-in-up"
       >
+        <div class="flex gap-1 text-yellow-400 mb-4 text-xl">
+          <i class="ri-star-fill"></i>
+          <i class="ri-star-fill"></i>
+          <i class="ri-star-fill"></i>
+          <i class="ri-star-fill"></i>
+          <i class="ri-star-fill"></i>
+        </div>
         <i
           class="ri-double-quotes-l text-5xl text-[#16a34a]/20 absolute top-6 right-8"
         ></i>
@@ -525,6 +541,13 @@
         class="bg-[#0a2f15] p-8 rounded-3xl shadow-xl relative animate-fade-in-up"
         style="animation-delay: 0.2s"
       >
+        <div class="flex gap-1 text-yellow-400 mb-4 text-xl">
+          <i class="ri-star-fill"></i>
+          <i class="ri-star-fill"></i>
+          <i class="ri-star-fill"></i>
+          <i class="ri-star-fill"></i>
+          <i class="ri-star-fill"></i>
+        </div>
         <i
           class="ri-double-quotes-l text-5xl text-[#84cc16]/20 absolute top-6 right-8"
         ></i>
