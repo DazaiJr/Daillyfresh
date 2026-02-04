@@ -4,37 +4,29 @@
   id="home"
   class="relative w-full h-[600px] md:h-[700px] overflow-hidden"
   x-data="{
-    activeSlide: 1,
+    activeSlide: {{ slides.0.id }},
     slides: [
-        {
-            id: 1,
-            image: '{% static 'images/slider-1.png' %}', 
-            title: 'Nourishing your Family with Pure, Farm-fresh Goodness',
-            subtitle: 'Straight from the farm to your fridge. 100% natural and antibiotic-free.',
-            showButton: true
-        },
-        {
-            id: 2,
-            image: '{% static 'images/slider-2.png' %}',
-            title: 'The Taste of Real Purity',
-            subtitle: 'Experience the richness of fresh cow and buffalo milk delivered daily.',
-            showButton: false 
-        },
-        {
-            id: 3,
-            image: '{% static 'images/slider-3.png' %}',
-            title: 'Healthy Kids, Happy Future',
-            subtitle: 'Rich in nutrients, perfect for your growing child\'s health.',
-            showButton: true
-        }
+      {% for slide in slides %}
+      {
+        id: {{ slide.id }},
+        title: '{{ slide.title|escapejs }}',
+        subtitle: '{{ slide.subtitle|escapejs }}',
+        image: '{{ slide.image.url }}',
+        showButton: {{ slide.show_button|yesno:"true,false" }}
+      },
+      {% endfor %}
     ],
-    loop() {
-        setInterval(() => {
-            this.activeSlide = this.activeSlide === 3 ? 1 : this.activeSlide + 1
-        }, 5000)
+    startSlider() {
+      setInterval(() => {
+        let index = this.slides.findIndex(
+          s => s.id === this.activeSlide
+        )
+        this.activeSlide =
+          this.slides[(index + 1) % this.slides.length].id
+      }, 4000)
     }
-}"
-  x-init="loop()"
+  }"
+  x-init="startSlider()"
 >
   <template x-for="slide in slides" :key="slide.id">
     <div

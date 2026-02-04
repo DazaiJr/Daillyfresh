@@ -77,6 +77,10 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
+# Media files (uploaded by admin / users)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 # Tailwind Configuration
 TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = [
