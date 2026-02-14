@@ -267,304 +267,266 @@
   </div>
 </section>
 
-<section id="products" class="py-24 bg-[#f3f4f6]">
-  <div class="container mx-auto px-6">
-    <div class="text-center mb-16 animate-fade-in-up">
-      <span class="text-[#16a34a] font-bold uppercase tracking-wider"
-        >Our Offerings</span
-      >
-      <h2
-        class="text-3xl md:text-5xl font-display font-bold text-[#0a2f15] mt-2"
-      >
-        Products We Serve You
-      </h2>
+<section id="products" class="py-24 bg-[#f8f9fa]" x-data="{
+    openModal: false,
+    selectedProduct: {},
+    products: [
+        {
+            id: 1,
+            name: 'Cow Milk',
+            description: 'Fresh and pure cow\'s milk in its original form.',
+            price: '₹75',
+            unit: '/ 1000 ml',
+            image: '{% static 'images/product-cow-milk.png' %}',
+            rating: 4.5,
+            reviews: 120,
+            badge: ''
+        },
+        {
+            id: 2,
+            name: 'Buffalo Milk',
+            description: 'Fresh buffalo milk, full-bodied and unaltered.',
+            price: '₹90',
+            unit: '/ 1000 ml',
+            image: '{% static 'images/product-buffalo-milk.png' %}',
+            rating: 4.8,
+            reviews: 85,
+            badge: ''
+        },
+        {
+            id: 3,
+            name: 'Power Eggs',
+            description: 'Protein Rich | Antibiotic-free | 100% Fresh.',
+            price: '₹90',
+            unit: '/ 6 pcs',
+            image: '{% static 'images/product-eggs.png' %}',
+            rating: 5.0,
+            reviews: 200,
+            badge: 'Best Seller'
+        },
+        {
+            id: 4,
+            name: 'Desi Cow Ghee',
+            description: 'Traditional, aromatic, golden ghee.',
+            price: '₹1200',
+            unit: '/ 1 kg',
+            image: '{% static 'images/product-ghee.png' %}',
+            rating: 4.9,
+            reviews: 340,
+            badge: ''
+        }
+    ]
+}">
+    <div class="container mx-auto px-6">
+        <div class="text-center mb-16 animate-fade-in-up">
+            <span class="text-[#16a34a] font-bold uppercase tracking-wider text-sm">Our Offerings</span>
+            <h2 class="text-3xl md:text-5xl font-display font-bold text-[#0a2f15] mt-2">Products We Serve You</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <template x-for="product in products" :key="product.id">
+                <div class="bg-white rounded-3xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 group relative border border-gray-100 flex flex-col items-center text-center">
+                    
+                    <div x-show="product.badge" class="absolute top-4 right-4 bg-[#FFC107] text-[#0a2f15] text-xs font-bold px-3 py-1 rounded-full z-10" x-text="product.badge"></div>
+
+                    <div class="relative w-full h-64 flex items-center justify-center mb-4 overflow-hidden rounded-2xl">
+                        <img :src="product.image" :alt="product.name" class="h-56 w-auto object-contain transition-transform duration-500 group-hover:scale-110">
+                        
+                        <div class="absolute inset-0 bg-black/5 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+                            <button @click="selectedProduct = product; openModal = true" 
+                                    class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#0a2f15] hover:bg-[#16a34a] hover:text-white transition-all shadow-lg transform hover:-translate-y-1" title="Quick View">
+                                <i class="ri-eye-line text-xl"></i>
+                            </button>
+                            <button class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#0a2f15] hover:bg-[#16a34a] hover:text-white transition-all shadow-lg transform hover:-translate-y-1" title="Add to Wishlist">
+                                <i class="ri-heart-line text-xl"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-[#0a2f15] mb-2" x-text="product.name"></h3>
+                    <p class="text-gray-500 text-sm mb-4 line-clamp-2" x-text="product.description"></p>
+                    
+                    <div class="mb-6">
+                        <span class="text-2xl font-bold text-[#16a34a]" x-text="product.price"></span>
+                        <span class="text-sm text-gray-400 font-normal" x-text="product.unit"></span>
+                    </div>
+
+                    <button class="w-full bg-[#0a2f15] text-white py-3 rounded-full font-bold hover:bg-[#16a34a] transition-colors flex items-center justify-center gap-2 text-sm">
+                        <i class="ri-shopping-cart-fill"></i> Add to Cart
+                    </button>
+                </div>
+            </template>
+        </div>
     </div>
 
-    <div
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto"
-    >
-      <div
-        class="bg-white rounded-[3rem] p-8 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group animate-fade-in-up flex flex-col border border-gray-50 overflow-hidden relative"
-      >
-        <div class="h-80 flex items-center justify-center mb-6 relative">
-          <img
-            src="{% static 'images/product-cow-milk.png' %}"
-            alt="Cow Milk"
-            class="w-full max-w-[90%] h-auto object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-2xl"
-          />
-        </div>
+    <div x-show="openModal" 
+         style="display: none;" 
+         class="fixed inset-0 z-50 flex items-center justify-center p-4"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0">
+        
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="openModal = false"></div>
 
-        <h3 class="text-3xl font-bold text-[#0a2f15] text-center relative z-10">
-          Cow Milk
-        </h3>
-        <p
-          class="text-gray-600 text-center mt-3 flex-grow text-lg relative z-10"
-        >
-          Fresh and pure cow's milk in its original form.
-        </p>
-        <div class="mt-8 text-center relative z-10">
-          <span class="text-4xl font-bold text-[#16a34a]"
-            >₹75
-            <span class="text-xl text-gray-500 font-normal"
-              >/ 1000 ml</span
-            ></span
-          >
-        </div>
-        <button
-          class="w-full mt-8 bg-[#0a2f15] text-white py-4 rounded-full font-bold hover:bg-[#16a34a] transition-colors flex items-center justify-center gap-2 text-lg relative z-10"
-        >
-          <i class="ri-shopping-cart-fill"></i> Add to Cart
-        </button>
-      </div>
+        <div class="bg-white rounded-3xl w-full max-w-4xl relative z-10 overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh]"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 translate-y-4 scale-95"
+             x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+             x-transition:leave-end="opacity-0 translate-y-4 scale-95">
+            
+            <button @click="openModal = false" class="absolute top-4 right-4 z-20 w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 text-gray-600 transition-colors">
+                <i class="ri-close-line text-xl"></i>
+            </button>
 
-      <div
-        class="bg-white rounded-[3rem] p-8 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group animate-fade-in-up flex flex-col border border-gray-50 overflow-hidden relative"
-        style="animation-delay: 0.1s"
-      >
-        <div class="h-80 flex items-center justify-center mb-6 relative">
-          <img
-            src="{% static 'images/product-buffalo-milk.png' %}"
-            alt="Buffalo Milk"
-            class="w-full max-w-[90%] h-auto object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-2xl"
-          />
-        </div>
-        <h3 class="text-3xl font-bold text-[#0a2f15] text-center relative z-10">
-          Buffalo Milk
-        </h3>
-        <p
-          class="text-gray-600 text-center mt-3 flex-grow text-lg relative z-10"
-        >
-          Fresh buffalo milk, full-bodied and unaltered.
-        </p>
-        <div class="mt-8 text-center relative z-10">
-          <span class="text-4xl font-bold text-[#16a34a]"
-            >₹90
-            <span class="text-xl text-gray-500 font-normal"
-              >/ 1000 ml</span
-            ></span
-          >
-        </div>
-        <button
-          class="w-full mt-8 bg-[#0a2f15] text-white py-4 rounded-full font-bold hover:bg-[#16a34a] transition-colors flex items-center justify-center gap-2 text-lg relative z-10"
-        >
-          <i class="ri-shopping-cart-fill"></i> Add to Cart
-        </button>
-      </div>
+            <div class="w-full md:w-1/2 bg-[#f3f4f6] flex items-center justify-center p-8 relative">
+                <div x-show="selectedProduct.badge" class="absolute top-6 left-6 bg-[#FFC107] text-[#0a2f15] text-sm font-bold px-4 py-1 rounded-full shadow-sm" x-text="selectedProduct.badge"></div>
+                <img :src="selectedProduct.image" :alt="selectedProduct.name" class="w-full max-w-xs object-contain drop-shadow-xl">
+            </div>
 
-      <div
-        class="bg-white rounded-[3rem] p-8 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group animate-fade-in-up flex flex-col border border-gray-50 overflow-hidden relative"
-        style="animation-delay: 0.2s"
-      >
-        <div class="h-80 flex items-center justify-center mb-6 relative">
-          <span
-            class="absolute top-0 right-0 bg-yellow-400 text-black text-sm font-bold px-5 py-2 rounded-full shadow-md z-20"
-            >Best Seller</span
-          >
-          <img
-            src="{% static 'images/product-eggs.png' %}"
-            alt="Power Eggs"
-            class="w-full max-w-[90%] h-auto object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-2xl"
-          />
+            <div class="w-full md:w-1/2 p-8 md:p-12 overflow-y-auto">
+                <span class="text-[#16a34a] font-bold text-sm tracking-widest uppercase mb-2 block">Daillyfresh</span>
+                <h2 class="text-3xl md:text-4xl font-display font-bold text-[#0a2f15] mb-4" x-text="selectedProduct.name"></h2>
+                
+                <div class="flex items-center gap-2 mb-6">
+                    <div class="flex text-[#FFC107] text-lg">
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-fill"></i>
+                        <i class="ri-star-half-fill"></i>
+                    </div>
+                    <span class="text-gray-500 text-sm" x-text="`(${selectedProduct.reviews} Reviews)`"></span>
+                </div>
+
+                <div class="flex items-end gap-2 mb-6">
+                    <span class="text-4xl font-bold text-[#16a34a]" x-text="selectedProduct.price"></span>
+                    <span class="text-lg text-gray-400 mb-1" x-text="selectedProduct.unit"></span>
+                </div>
+
+                <p class="text-gray-600 leading-relaxed mb-8" x-text="selectedProduct.description + ' Sourced directly from healthy, well-cared cattle. No preservatives, no adulteration. Pure freshness guaranteed.'"></p>
+
+                <div class="flex items-center gap-2 mb-8">
+                    <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+                    <span class="text-green-700 font-medium bg-green-50 px-3 py-1 rounded-lg">In Stock</span>
+                </div>
+
+                <div class="flex gap-4">
+                    <button class="flex-1 bg-[#0a2f15] text-white py-4 rounded-full font-bold hover:bg-[#16a34a] transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
+                        <i class="ri-shopping-cart-2-fill"></i> Add to Cart
+                    </button>
+                    <button class="w-14 h-14 border-2 border-gray-200 rounded-full flex items-center justify-center text-gray-500 hover:border-[#16a34a] hover:text-[#16a34a] transition-all">
+                        <i class="ri-heart-line text-xl"></i>
+                    </button>
+                </div>
+            </div>
         </div>
-        <h3 class="text-3xl font-bold text-[#0a2f15] text-center relative z-10">
-          Power Eggs
-        </h3>
-        <p
-          class="text-gray-600 text-center mt-3 flex-grow text-lg relative z-10"
-        >
-          Protein Rich | Antibiotic-free | 100% Fresh.
-        </p>
-        <div class="mt-8 text-center relative z-10">
-          <span class="text-4xl font-bold text-[#16a34a]"
-            >₹90
-            <span class="text-xl text-gray-500 font-normal">/ 6 pcs</span></span
-          >
-        </div>
-        <button
-          class="w-full mt-8 bg-[#0a2f15] text-white py-4 rounded-full font-bold hover:bg-[#16a34a] transition-colors flex items-center justify-center gap-2 text-lg relative z-10"
-        >
-          <i class="ri-shopping-cart-fill"></i> Add to Cart
-        </button>
-      </div>
     </div>
-  </div>
 </section>
 
-<section class="py-24 bg-[#f3f4f6] overflow-hidden">
-  <div class="container mx-auto px-6 text-center mb-16 animate-fade-in-up">
-    <span class="text-[#16a34a] font-bold uppercase tracking-wider"
-      >Trusted Availability</span
-    >
-    <h3 class="text-3xl md:text-4xl font-display font-bold text-[#0a2f15] mt-2">
-      Product Also Available At
-    </h3>
-  </div>
-
-  <div class="relative w-full">
-    <div
-      class="absolute inset-y-0 left-0 w-24 md:w-48 bg-gradient-to-r from-[#f3f4f6] to-transparent z-10 pointer-events-none"
-    ></div>
-    <div
-      class="absolute inset-y-0 right-0 w-24 md:w-48 bg-gradient-to-l from-[#f3f4f6] to-transparent z-10 pointer-events-none"
-    ></div>
-
-    <div
-      class="flex items-center gap-20 md:gap-32 animate-marquee whitespace-nowrap min-w-full py-4"
-    >
-      <img
-        src="{% static 'images/partner-zepto.png' %}"
-        alt="Zepto"
-        class="h-20 md:h-28 w-auto object-contain hover:scale-110 transition-transform duration-300"
-      />
-      <img
-        src="{% static 'images/partner-blinkit.png' %}"
-        alt="Blinkit"
-        class="h-20 md:h-28 w-auto object-contain hover:scale-110 transition-transform duration-300"
-      />
-      <img
-        src="{% static 'images/partner-bb.png' %}"
-        alt="BigBasket"
-        class="h-20 md:h-28 w-auto object-contain hover:scale-110 transition-transform duration-300"
-      />
-      <img
-        src="{% static 'images/partner-freshtohome.png' %}"
-        alt="FreshToHome"
-        class="h-20 md:h-28 w-auto object-contain hover:scale-110 transition-transform duration-300"
-      />
-      <img
-        src="{% static 'images/partner-countrydelight.png' %}"
-        alt="Country Delight"
-        class="h-20 md:h-28 w-auto object-contain hover:scale-110 transition-transform duration-300"
-      />
-
-      <img
-        src="{% static 'images/partner-zepto.png' %}"
-        alt="Zepto"
-        class="h-20 md:h-28 w-auto object-contain hover:scale-110 transition-transform duration-300"
-      />
-      <img
-        src="{% static 'images/partner-blinkit.png' %}"
-        alt="Blinkit"
-        class="h-20 md:h-28 w-auto object-contain hover:scale-110 transition-transform duration-300"
-      />
-      <img
-        src="{% static 'images/partner-bb.png' %}"
-        alt="BigBasket"
-        class="h-20 md:h-28 w-auto object-contain hover:scale-110 transition-transform duration-300"
-      />
-      <img
-        src="{% static 'images/partner-freshtohome.png' %}"
-        alt="FreshToHome"
-        class="h-20 md:h-28 w-auto object-contain hover:scale-110 transition-transform duration-300"
-      />
-      <img
-        src="{% static 'images/partner-countrydelight.png' %}"
-        alt="Country Delight"
-        class="h-20 md:h-28 w-auto object-contain hover:scale-110 transition-transform duration-300"
-      />
-
-      <img
-        src="{% static 'images/partner-zepto.png' %}"
-        alt="Zepto"
-        class="h-20 md:h-28 w-auto object-contain hover:scale-110 transition-transform duration-300"
-      />
-      <img
-        src="{% static 'images/partner-blinkit.png' %}"
-        alt="Blinkit"
-        class="h-20 md:h-28 w-auto object-contain hover:scale-110 transition-transform duration-300"
-      />
+<section class="py-16 bg-[#f3f4f6] overflow-hidden">
+    <div class="container mx-auto px-6 text-center mb-10">
+        <span class="text-[#16a34a] font-bold uppercase tracking-wider text-xs md:text-sm">Trusted Availability</span>
+        <h3 class="text-2xl md:text-3xl font-display font-bold text-[#0a2f15] mt-2">
+            Also Available On
+        </h3>
     </div>
-  </div>
+    
+    <div class="relative w-full">
+        <div class="absolute inset-y-0 left-0 w-16 md:w-32 bg-gradient-to-r from-[#f3f4f6] to-transparent z-10 pointer-events-none"></div>
+        <div class="absolute inset-y-0 right-0 w-16 md:w-32 bg-gradient-to-l from-[#f3f4f6] to-transparent z-10 pointer-events-none"></div>
+
+        <div class="flex items-center gap-16 md:gap-24 animate-marquee whitespace-nowrap min-w-full py-2">
+            
+            <img src="{% static 'images/partner-zepto.png' %}" alt="Zepto" class="h-10 md:h-14 w-auto object-contain">
+            <img src="{% static 'images/partner-blinkit.png' %}" alt="Blinkit" class="h-10 md:h-14 w-auto object-contain">
+            <img src="{% static 'images/partner-bb.png' %}" alt="bb" class="h-10 md:h-14 w-auto object-contain">
+            <img src="{% static 'images/partner-freshtohome.png' %}" alt="FreshToHome" class="h-10 md:h-14 w-auto object-contain">
+            <img src="{% static 'images/partner-countrydelight.png' %}" alt="Country Delight" class="h-10 md:h-14 w-auto object-contain">
+
+            <img src="{% static 'images/partner-zepto.png' %}" alt="Zepto" class="h-10 md:h-14 w-auto object-contain">
+            <img src="{% static 'images/partner-blinkit.png' %}" alt="Blinkit" class="h-10 md:h-14 w-auto object-contain">
+            <img src="{% static 'images/partner-bb.png' %}" alt="bb" class="h-10 md:h-14 w-auto object-contain">
+            <img src="{% static 'images/partner-freshtohome.png' %}" alt="FreshToHome" class="h-10 md:h-14 w-auto object-contain">
+            <img src="{% static 'images/partner-countrydelight.png' %}" alt="Country Delight" class="h-10 md:h-14 w-auto object-contain">
+            
+            <img src="{% static 'images/partner-zepto.png' %}" alt="Zepto" class="h-10 md:h-14 w-auto object-contain">
+            <img src="{% static 'images/partner-blinkit.png' %}" alt="Blinkit" class="h-10 md:h-14 w-auto object-contain">
+        </div>
+    </div>
 </section>
 
 <section id="testimonials" class="py-24 bg-white relative">
   <div class="container mx-auto px-6">
     <div class="text-center mb-16 animate-fade-in-up">
-      <span class="text-[#16a34a] font-bold uppercase tracking-wider"
-        >Testimonials</span
-      >
-      <h2
-        class="text-3xl md:text-5xl font-display font-bold text-[#0a2f15] mt-2"
-      >
+      <span class="text-[#16a34a] font-bold uppercase tracking-wider">Testimonials</span>
+      <h2 class="text-3xl md:text-5xl font-display font-bold text-[#0a2f15] mt-2">
         What our client say about us
       </h2>
     </div>
 
-    <div
-      class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto"
-    >
-      <div
-        class="bg-white p-8 rounded-3xl border-2 border-[#16a34a]/20 shadow-lg relative animate-fade-in-up"
-      >
-        <div class="flex gap-1 text-yellow-400 mb-4 text-xl">
-          <i class="ri-star-fill"></i>
-          <i class="ri-star-fill"></i>
-          <i class="ri-star-fill"></i>
-          <i class="ri-star-fill"></i>
-          <i class="ri-star-fill"></i>
-        </div>
-        <i
-          class="ri-double-quotes-l text-5xl text-[#16a34a]/20 absolute top-6 right-8"
-        ></i>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto">
+      
+      <div class="bg-white p-8 rounded-3xl border-2 border-[#16a34a]/20 shadow-lg relative animate-fade-in-up">
+        
+        <i class="ri-double-quotes-l text-5xl text-[#16a34a]/20 absolute top-6 right-8"></i>
+        
         <p class="text-gray-600 italic text-lg leading-relaxed mb-8">
           “As a professional swimmer, I need strength, stamina, and clean
           nutrition every single day. Daillyfresh milk and Power Eggs have
-          become an essential part of my diet — fresh, pure, and full of energy.
-          I can truly feel the difference in my performance.”
+          become an essential part of my diet — fresh, pure, and full of energy.”
         </p>
+        
         <div class="flex items-center gap-4">
-          <div class="w-14 h-14 bg-gray-200 rounded-full overflow-hidden">
-            <img
-              src="https://randomuser.me/api/portraits/women/32.jpg"
-              alt="Akshata"
-              class="w-full h-full object-cover"
-            />
+          <div class="w-16 h-16 bg-gray-200 rounded-full overflow-hidden shrink-0">
+            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Akshata" class="w-full h-full object-cover" />
           </div>
           <div>
-            <h4 class="text-xl font-bold text-[#0a2f15]">
-              Akshata K Karapurkar
-            </h4>
-            <p class="text-[#16a34a] font-medium">National Level Swimmer</p>
+            <h4 class="text-xl font-bold text-[#0a2f15]">Akshata K Karapurkar</h4>
+            <p class="text-[#16a34a] font-medium text-sm">National Level Swimmer</p>
+            
+            <div class="flex gap-1 text-[#FFC107] mt-1 text-sm">
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+            </div>
           </div>
         </div>
       </div>
 
-      <div
-        class="bg-[#0a2f15] p-8 rounded-3xl shadow-xl relative animate-fade-in-up"
-        style="animation-delay: 0.2s"
-      >
-        <div class="flex gap-1 text-yellow-400 mb-4 text-xl">
-          <i class="ri-star-fill"></i>
-          <i class="ri-star-fill"></i>
-          <i class="ri-star-fill"></i>
-          <i class="ri-star-fill"></i>
-          <i class="ri-star-fill"></i>
-        </div>
-        <i
-          class="ri-double-quotes-l text-5xl text-[#84cc16]/20 absolute top-6 right-8"
-        ></i>
+      <div class="bg-[#0a2f15] p-8 rounded-3xl shadow-xl relative animate-fade-in-up" style="animation-delay: 0.2s">
+        
+        <i class="ri-double-quotes-l text-5xl text-[#84cc16]/20 absolute top-6 right-8"></i>
+        
         <p class="text-green-100/90 italic text-lg leading-relaxed mb-8">
-          “For me, beauty is not just about looks, it’s about health and
-          confidence from within. Daillyfresh dairy products fit perfectly into
-          my lifestyle — the milk is pure, the dahi is creamy, and it makes me
-          feel fresh and nourished every day.”
+          “For me, beauty is not just about looks, it’s about health. Daillyfresh dairy products fit perfectly into my lifestyle — the milk is pure, the dahi is creamy, and it makes me feel fresh every day.”
         </p>
+        
         <div class="flex items-center gap-4">
-          <div class="w-14 h-14 bg-[#16a34a] rounded-full overflow-hidden">
-            <img
-              src="https://randomuser.me/api/portraits/women/44.jpg"
-              alt="Shreyada"
-              class="w-full h-full object-cover"
-            />
+          <div class="w-16 h-16 bg-[#16a34a] rounded-full overflow-hidden shrink-0">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Shreyada" class="w-full h-full object-cover" />
           </div>
           <div>
             <h4 class="text-xl font-bold text-white">Shreyada Raje</h4>
-            <p class="text-[#84cc16] font-medium">
-              Miss Universe India (Top 20)
-            </p>
+            <p class="text-[#84cc16] font-medium text-sm">Miss Universe India (Top 20)</p>
+            
+            <div class="flex gap-1 text-[#FFC107] mt-1 text-sm">
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+            </div>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -583,15 +545,11 @@
 
   /* Fixed Marquee Animation */
   .animate-marquee {
-    animation: marquee 30s linear infinite;
+    animation: marquee 20s linear infinite; /* Reduced from 30s to 20s for faster speed */
   }
   @keyframes marquee {
-    0% {
-      transform: translateX(0%);
-    }
-    100% {
-      transform: translateX(-50%);
-    } /* Moves only 50% because content is duplicated */
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
   }
 </style>
 
