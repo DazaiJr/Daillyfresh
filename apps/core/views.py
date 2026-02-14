@@ -3,4 +3,5 @@ from .models import *
 
 def home(request):
     slides = HomeHero.objects.order_by('order')
-    return render(request, 'index.html', {'slides': slides})
+    products = Product.objects.all()
+    return render(request, 'index.html', {'slides': slides, 'products': products})

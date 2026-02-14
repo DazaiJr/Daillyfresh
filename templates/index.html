@@ -271,50 +271,19 @@
     openModal: false,
     selectedProduct: {},
     products: [
+        {% for product in products %}
         {
-            id: 1,
-            name: 'Cow Milk',
-            description: 'Fresh and pure cow\'s milk in its original form.',
-            price: '₹75',
-            unit: '/ 1000 ml',
-            image: '{% static 'images/product-cow-milk.png' %}',
-            rating: 4.5,
-            reviews: 120,
-            badge: ''
-        },
-        {
-            id: 2,
-            name: 'Buffalo Milk',
-            description: 'Fresh buffalo milk, full-bodied and unaltered.',
-            price: '₹90',
-            unit: '/ 1000 ml',
-            image: '{% static 'images/product-buffalo-milk.png' %}',
-            rating: 4.8,
-            reviews: 85,
-            badge: ''
-        },
-        {
-            id: 3,
-            name: 'Power Eggs',
-            description: 'Protein Rich | Antibiotic-free | 100% Fresh.',
-            price: '₹90',
-            unit: '/ 6 pcs',
-            image: '{% static 'images/product-eggs.png' %}',
-            rating: 5.0,
-            reviews: 200,
-            badge: 'Best Seller'
-        },
-        {
-            id: 4,
-            name: 'Desi Cow Ghee',
-            description: 'Traditional, aromatic, golden ghee.',
-            price: '₹1200',
-            unit: '/ 1 kg',
-            image: '{% static 'images/product-ghee.png' %}',
-            rating: 4.9,
-            reviews: 340,
-            badge: ''
-        }
+            id: {{ product.id }},
+            name: '{{ product.name|escapejs }}',
+            description: '{{ product.description|escapejs }}',
+            price: '₹{{ product.price }}',
+            unit: '{{ product.unit }}',
+            image: '{{ product.image.url }}',
+            rating: {{ product.rating }},
+            reviews: {{ product.reviews_count }},
+            badge: '{{ product.badge|default:""|escapejs }}'
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
     ]
 }">
     <div class="container mx-auto px-6">
@@ -409,11 +378,6 @@
                 </div>
 
                 <p class="text-gray-600 leading-relaxed mb-8" x-text="selectedProduct.description + ' Sourced directly from healthy, well-cared cattle. No preservatives, no adulteration. Pure freshness guaranteed.'"></p>
-
-                <div class="flex items-center gap-2 mb-8">
-                    <span class="w-3 h-3 bg-green-500 rounded-full"></span>
-                    <span class="text-green-700 font-medium bg-green-50 px-3 py-1 rounded-lg">In Stock</span>
-                </div>
 
                 <div class="flex gap-4">
                     <button class="flex-1 bg-[#0a2f15] text-white py-4 rounded-full font-bold hover:bg-[#16a34a] transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
