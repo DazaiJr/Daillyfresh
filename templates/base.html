@@ -42,6 +42,39 @@
       ::-webkit-scrollbar-thumb:hover {
         background: #15803d;
       }
+
+      /* ── Navbar Responsive Logic ──
+         Desktop (≥1024px): full nav visible, hamburger hidden
+         Tablet & Mobile (<1024px): full nav hidden, hamburger visible
+      */
+
+      /* Hidden by default (mobile-first) */
+      .nav-desktop {
+        display: none !important;
+      }
+      .nav-desktop-block {
+        display: none !important;
+      }
+      .nav-hamburger {
+        display: flex !important;
+      }
+
+      /* On laptop/desktop screens show full nav, hide hamburger */
+      @media (min-width: 1024px) {
+        .nav-desktop {
+          display: flex !important;
+        }
+        .nav-desktop-block {
+          display: block !important;
+        }
+        .nav-hamburger {
+          display: none !important;
+        }
+        /* Force hide mobile dropdown on desktop regardless of Alpine state */
+        .nav-mobile-dropdown {
+          display: none !important;
+        }
+      }
     </style>
   </head>
   <body
@@ -55,18 +88,19 @@
       class="fixed top-0 w-full z-50 transition-all duration-300"
     >
       <div
-        class="container mx-auto px-4 md:px-6 flex justify-between items-center"
+        class="container mx-auto px-4 lg:px-6 flex justify-between items-center"
       >
         <a href="/" class="flex items-center">
           <img
             src="{% static 'images/logo.png' %}"
             alt="Daillyfresh Logo"
-            class="h-12 md:h-14 w-auto object-contain"
+            class="h-12 lg:h-14 w-auto object-contain"
           />
         </a>
 
+        <!-- Desktop Nav — only visible on lg (1024px) and above -->
         <nav
-          class="hidden md:flex items-center gap-8 font-medium transition-colors duration-300"
+          class="nav-desktop items-center gap-8 font-medium transition-colors duration-300"
           :class="scrolled ? 'text-[#0a2f15]' : 'text-white'"
         >
           <a href="/#home" class="hover:text-[#16a34a] transition-colors"
@@ -88,23 +122,75 @@
 
         <div class="flex items-center gap-4">
           {% if user.is_authenticated %}
-          <div class="hidden md:flex items-center gap-4">
-            <span
-              class="font-bold"
-              :class="scrolled ? 'text-[#16a34a]' : 'text-green-300'"
+          <!-- Desktop Profile — only on lg+ -->
+          <div
+            class="nav-desktop-block relative z-50"
+            x-data="{ profileOpen: false }"
+          >
+            <button
+              @click="profileOpen = !profileOpen"
+              @click.away="profileOpen = false"
+              class="focus:outline-none block hover:scale-105 transition-transform duration-200"
             >
-              Hi, {{ user.username }}!
-            </span>
-            <a
-              href="{% url 'logout' %}"
-              class="text-sm font-bold border-b-2 border-transparent hover:border-red-500 transition-colors"
-              :class="scrolled ? 'text-red-600' : 'text-red-400'"
+              <div
+                class="w-10 h-10 rounded-full bg-[#16a34a] text-white flex items-center justify-center font-bold shadow-md hover:bg-[#0a2f15] transition-colors"
+              >
+                {{ user.username|make_list|first|upper }}
+              </div>
+            </button>
+
+            <div
+              x-show="profileOpen"
+              x-transition.opacity.duration.200ms
+              class="absolute right-0 mt-3 w-52 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden z-50 transform origin-top-right"
+              style="display: none"
             >
-              Logout
-            </a>
+              <div class="px-5 py-4 bg-green-50/50 border-b border-gray-50">
+                <p
+                  class="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-1 whitespace-nowrap"
+                >
+                  Signed in as
+                </p>
+                <p class="text-sm font-bold text-[#0a2f15] truncate">
+                  {{ user.username }}
+                </p>
+              </div>
+
+              <div class="py-2">
+                <a
+                  href="#"
+                  class="flex items-center gap-3 px-5 py-2.5 text-sm font-medium text-gray-600 hover:text-[#16a34a] hover:bg-green-50/50 transition-all group"
+                >
+                  <i
+                    class="ri-user-line text-lg text-gray-400 group-hover:text-[#16a34a] transition-colors"
+                  ></i>
+                  <span class="whitespace-nowrap">My Profile</span>
+                </a>
+                <a
+                  href="#"
+                  class="flex items-center gap-3 px-5 py-2.5 text-sm font-medium text-gray-600 hover:text-[#16a34a] hover:bg-green-50/50 transition-all group"
+                >
+                  <i
+                    class="ri-shopping-bag-line text-lg text-gray-400 group-hover:text-[#16a34a] transition-colors"
+                  ></i>
+                  <span class="whitespace-nowrap">My Orders</span>
+                </a>
+              </div>
+
+              <div class="border-t border-gray-100 py-1 bg-gray-50/30">
+                <a
+                  href="{% url 'logout' %}"
+                  class="flex items-center gap-3 px-5 py-2.5 text-sm font-bold text-red-600 hover:bg-red-50 transition-all"
+                >
+                  <i class="ri-logout-box-r-line text-lg"></i>
+                  <span class="whitespace-nowrap">Logout</span>
+                </a>
+              </div>
+            </div>
           </div>
           {% else %}
-          <div class="hidden md:flex items-center gap-4">
+          <!-- Desktop Login/Signup — only on lg+ -->
+          <div class="nav-desktop items-center gap-4">
             <a
               href="{% url 'login' %}"
               class="font-bold hover:text-[#16a34a] transition-colors"
@@ -121,17 +207,19 @@
           </div>
           {% endif %}
 
+          <!-- Call Us — only on lg+ -->
           <a
             href="tel:+918149415113"
-            class="hidden md:flex items-center gap-2 bg-[#16a34a] text-white px-5 py-2.5 rounded-full font-bold shadow-md hover:bg-[#0a2f15] transition-all transform hover:-translate-y-0.5"
+            class="nav-desktop items-center gap-2 bg-[#16a34a] text-white px-5 py-2.5 rounded-full font-bold shadow-md hover:bg-[#0a2f15] transition-all transform hover:-translate-y-0.5"
           >
             <i class="ri-phone-fill"></i>
-            <span>Call Us</span>
+            <span class="whitespace-nowrap">Call Us</span>
           </a>
 
+          <!-- Hamburger — visible below lg (tablet + mobile) -->
           <button
             @click="mobileMenuOpen = !mobileMenuOpen"
-            class="md:hidden text-2xl focus:outline-none transition-colors duration-300"
+            class="nav-hamburger text-2xl focus:outline-none transition-colors duration-300"
             :class="scrolled ? 'text-[#0a2f15]' : 'text-white'"
           >
             <i :class="mobileMenuOpen ? 'ri-close-line' : 'ri-menu-line'"></i>
@@ -139,11 +227,13 @@
         </div>
       </div>
 
+      <!-- Mobile / Tablet Dropdown Menu — visible below lg -->
       <div
         x-show="mobileMenuOpen"
         x-transition
         @click.away="mobileMenuOpen = false"
-        class="md:hidden absolute top-full left-0 w-full bg-white shadow-lg border-t border-gray-100 p-4 flex flex-col gap-4 text-[#0a2f15]"
+        class="nav-mobile-dropdown absolute top-full left-0 w-full bg-white shadow-lg border-t border-gray-100 p-4 flex flex-col gap-4 text-[#0a2f15]"
+        style="display: none"
       >
         <a
           href="/#home"
@@ -179,16 +269,33 @@
         <hr class="border-gray-100" />
 
         {% if user.is_authenticated %}
-        <div class="bg-green-50 p-3 rounded-lg">
-          <span class="block text-sm text-gray-500">Logged in as</span>
-          <span class="block font-bold text-[#16a34a] text-lg"
-            >{{ user.username }}</span
+        <div class="bg-green-50 p-3 rounded-xl flex items-center gap-3">
+          <div
+            class="w-10 h-10 rounded-full bg-[#16a34a] text-white flex items-center justify-center font-bold text-lg"
           >
+            {{ user.username|make_list|first|upper }}
+          </div>
+          <div>
+            <span class="block text-sm text-gray-500">Logged in as</span>
+            <span class="block font-bold text-[#16a34a] text-lg"
+              >{{ user.username }}</span
+            >
+          </div>
         </div>
         <a
+          href="#"
+          class="block font-semibold text-gray-700 hover:text-[#16a34a] py-2"
+          ><i class="ri-user-line mr-2"></i> My Profile</a
+        >
+        <a
+          href="#"
+          class="block font-semibold text-gray-700 hover:text-[#16a34a] py-2"
+          ><i class="ri-shopping-bag-line mr-2"></i> My Orders</a
+        >
+        <a
           href="{% url 'logout' %}"
-          class="block font-bold text-red-600 hover:text-red-700"
-          >Logout</a
+          class="block font-bold text-red-600 hover:text-red-700 py-2"
+          ><i class="ri-logout-box-r-line mr-2"></i> Logout</a
         >
         {% else %}
         <a
@@ -323,6 +430,14 @@
               </li>
               <li>
                 <a
+                  href="/#process"
+                  class="text-green-100/80 hover:text-[#84cc16] transition-colors flex items-center gap-2"
+                  ><i class="ri-arrow-right-s-line text-[#16a34a]"></i> Our
+                  Process</a
+                >
+              </li>
+              <li>
+                <a
                   href="/#products"
                   class="text-green-100/80 hover:text-[#84cc16] transition-colors flex items-center gap-2"
                   ><i class="ri-arrow-right-s-line text-[#16a34a]"></i>
@@ -331,10 +446,10 @@
               </li>
               <li>
                 <a
-                  href="/#testimonials"
+                  href="#contact"
                   class="text-green-100/80 hover:text-[#84cc16] transition-colors flex items-center gap-2"
                   ><i class="ri-arrow-right-s-line text-[#16a34a]"></i>
-                  Testimonials</a
+                  Contact</a
                 >
               </li>
             </ul>
@@ -369,7 +484,7 @@
                 <i class="ri-map-pin-fill text-[#16a34a] text-xl mt-1"></i>
                 <div>
                   <p class="font-bold text-white">Location</p>
-                  <p>Nagpur, Maharashtra</p>
+                  <p>Nagpur, Maharashtra, India</p>
                 </div>
               </li>
             </ul>
@@ -400,7 +515,9 @@
             <a href="#" class="hover:text-[#84cc16] transition-colors"
               >Privacy Policy</a
             >
-            <a href="#" class="hover:text-[#84cc16] transition-colors">Terms</a>
+            <a href="#" class="hover:text-[#84cc16] transition-colors"
+              >Terms & Conditions</a
+            >
           </div>
         </div>
       </div>
