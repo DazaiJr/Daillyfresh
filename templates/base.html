@@ -709,10 +709,7 @@
         <i class="ri-information-fill text-2xl text-blue-500"></i>
         {% endif %}
 
-        <span
-          class="text-sm text-gray-800 flex-grow"
-          x-text="'{{ message|escapejs }}'"
-        ></span>
+        <span class="text-sm text-gray-800 flex-grow">{{ message }}</span>
 
         <button
           @click="show = false"
