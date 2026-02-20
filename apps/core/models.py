@@ -3,6 +3,7 @@ from django.db import models
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 
 # Create your models here.
@@ -84,6 +85,8 @@ class Order(models.Model):
     # Pricing
     subtotal = models.DecimalField(max_digits=10, decimal_places=2)
     delivery_fee = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    coupon = models.ForeignKey('Coupon', on_delete=models.SET_NULL, null=True, blank=True, related_name='orders')
+    discount_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
     
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
@@ -101,7 +104,7 @@ class Order(models.Model):
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2) # Store price at the time of purchase
+    price = models.DecimalField(max_digits=10, decimal_places=2) 
     quantity = models.PositiveIntegerField(default=1)
 
     def __str__(self):
@@ -109,3 +112,40 @@ class OrderItem(models.Model):
     
     def get_cost(self):
         return self.price * self.quantity
+    
+# --- Coupon & Affiliate Model ---
+class Coupon(models.Model):
+    DISCOUNT_TYPES = (
+        ('Fixed', 'Fixed Amount'),
+        ('Percentage', 'Percentage (%)'),
+    )
+
+    code = models.CharField(max_length=50, unique=True, help_text="e.g., DIWALI50 or RAHUL10")
+    discount_type = models.CharField(max_length=20, choices=DISCOUNT_TYPES, default='Percentage')
+    discount_value = models.DecimalField(max_digits=10, decimal_places=2, help_text="Amount in ₹ or %")
+    min_order_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    
+    # Validity
+    is_active = models.BooleanField(default=True)
+    valid_from = models.DateTimeField(default=timezone.now)
+    valid_to = models.DateTimeField()
+    
+    # Usage Tracking
+    max_uses = models.PositiveIntegerField(null=True, blank=True, help_text="Leave blank for unlimited")
+    total_uses = models.PositiveIntegerField(default=0)
+
+    # Affiliate / Freelancer Tracking
+    is_affiliate = models.BooleanField(default=False, help_text="Check this if given to a YouTuber/Freelancer")
+    affiliate_name = models.CharField(max_length=100, null=True, blank=True)
+    total_revenue_generated = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
+
+    def __str__(self):
+        return self.code
+
+    @property
+    def is_valid(self):
+        now = timezone.now()
+        if self.is_active and self.valid_from <= now <= self.valid_to:
+            if self.max_uses is None or self.total_uses < self.max_uses:
+                return True
+        return False
