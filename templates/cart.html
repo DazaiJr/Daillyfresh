@@ -17,14 +17,14 @@ Daillyfresh{% endblock %} {% block content %}
   .cart-section {
     background: var(--cream);
     min-height: 100vh;
-    padding: 7rem 0 4rem;
+    padding: 5.5rem 0 4rem;
     font-family: "DM Sans", sans-serif;
   }
 
   .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 1.5rem;
+    padding: 0 1rem;
   }
 
   .empty-wrap {
@@ -113,7 +113,6 @@ Daillyfresh{% endblock %} {% block content %}
     left: 28px;
     animation: fallLeft 2.4s cubic-bezier(0.55, 0, 0.2, 1) infinite;
   }
-
   .prod-item:nth-child(2) {
     width: 40px;
     height: 40px;
@@ -122,7 +121,6 @@ Daillyfresh{% endblock %} {% block content %}
     animation: fallRight 2.4s cubic-bezier(0.55, 0, 0.2, 1) infinite;
     animation-delay: 0.8s;
   }
-
   .prod-item:nth-child(3) {
     width: 36px;
     height: 36px;
@@ -138,131 +136,107 @@ Daillyfresh{% endblock %} {% block content %}
       opacity: 0;
       transform: translateY(0) scale(1) rotate(-12deg);
     }
-
     8% {
       opacity: 1;
     }
-
     55% {
       opacity: 1;
       transform: translateY(112px) scale(0.75) rotate(6deg);
     }
-
     68% {
       opacity: 0;
       transform: translateY(126px) scale(0.4) rotate(0);
     }
-
     100% {
       opacity: 0;
       transform: translateY(126px) scale(0.4);
     }
   }
-
   @keyframes fallRight {
     0% {
       opacity: 0;
       transform: translateY(0) scale(1) rotate(12deg);
     }
-
     8% {
       opacity: 1;
     }
-
     55% {
       opacity: 1;
       transform: translateY(112px) scale(0.75) rotate(-6deg);
     }
-
     68% {
       opacity: 0;
       transform: translateY(126px) scale(0.4) rotate(0);
     }
-
     100% {
       opacity: 0;
       transform: translateY(126px) scale(0.4);
     }
   }
-
   @keyframes fallCenter {
     0% {
       opacity: 0;
       transform: translateY(0) scale(1) rotate(-6deg);
     }
-
     8% {
       opacity: 1;
     }
-
     55% {
       opacity: 1;
       transform: translateY(108px) scale(0.75) rotate(4deg);
     }
-
     68% {
       opacity: 0;
       transform: translateY(122px) scale(0.4) rotate(0);
     }
-
     100% {
       opacity: 0;
       transform: translateY(122px) scale(0.4);
     }
   }
-
   @keyframes cartWiggle {
     0%,
     30% {
       transform: translateX(-50%) rotate(0deg);
     }
-
     37% {
       transform: translateX(-50%) rotate(-5deg);
     }
-
     44% {
       transform: translateX(-50%) rotate(5deg);
     }
-
     50% {
       transform: translateX(-50%) rotate(-2.5deg);
     }
-
     55% {
       transform: translateX(-50%) rotate(0deg);
     }
-
     72%,
     84% {
       transform: translateX(-50%) rotate(0deg);
     }
-
     90% {
       transform: translateX(-50%) rotate(-5deg);
     }
-
     95% {
       transform: translateX(-50%) rotate(5deg);
     }
-
     98% {
       transform: translateX(-50%) rotate(-2deg);
     }
-
     100% {
       transform: translateX(-50%) rotate(0deg);
     }
   }
 
   .page-header {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     animation: slideUp 0.4s ease both;
   }
 
   .page-header h1 {
     font-family: "Fraunces", serif;
-    font-size: 2.6rem;
+    font-size: 2.2rem;
     font-weight: 700;
     color: var(--dark);
     line-height: 1.1;
@@ -274,9 +248,10 @@ Daillyfresh{% endblock %} {% block content %}
     font-size: 0.95rem;
   }
 
+  /* ── Layout ── */
   .cart-layout {
     display: flex;
-    gap: 2rem;
+    gap: 1.5rem;
     align-items: flex-start;
   }
 
@@ -290,6 +265,7 @@ Daillyfresh{% endblock %} {% block content %}
     flex-shrink: 0;
   }
 
+  /* ── Cart Table ── */
   .cart-table {
     background: var(--white);
     border: 1px solid var(--border);
@@ -300,7 +276,7 @@ Daillyfresh{% endblock %} {% block content %}
 
   .table-head {
     display: grid;
-    grid-template-columns: 1fr 140px 120px;
+    grid-template-columns: minmax(200px, 1fr) 140px 120px;
     padding: 1rem 1.5rem;
     background: var(--cream);
     border-bottom: 1px solid var(--border);
@@ -318,7 +294,7 @@ Daillyfresh{% endblock %} {% block content %}
 
   .cart-row {
     display: grid;
-    grid-template-columns: 1fr 140px 120px;
+    grid-template-columns: minmax(200px, 1fr) 140px 120px;
     align-items: center;
     padding: 1.2rem 1.5rem;
     border-bottom: 1px solid var(--border);
@@ -328,7 +304,6 @@ Daillyfresh{% endblock %} {% block content %}
   .cart-row:last-child {
     border-bottom: none;
   }
-
   .cart-row:hover {
     background: #fafffe;
   }
@@ -340,8 +315,8 @@ Daillyfresh{% endblock %} {% block content %}
   }
 
   .product-img {
-    width: 72px;
-    height: 72px;
+    width: 68px;
+    height: 68px;
     background: var(--cream);
     border-radius: 1rem;
     display: flex;
@@ -374,9 +349,9 @@ Daillyfresh{% endblock %} {% block content %}
   .product-info .price-mob {
     display: none;
     color: var(--green-primary);
-    font-weight: 600;
-    margin-top: 0.3rem;
-    font-size: 0.85rem;
+    font-weight: 700;
+    margin-top: 0.25rem;
+    font-size: 0.9rem;
   }
 
   .qty-cell {
@@ -385,7 +360,7 @@ Daillyfresh{% endblock %} {% block content %}
   }
 
   .qty-control {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     background: var(--cream);
     border: 1px solid var(--border);
@@ -394,8 +369,8 @@ Daillyfresh{% endblock %} {% block content %}
   }
 
   .qty-btn {
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -415,18 +390,19 @@ Daillyfresh{% endblock %} {% block content %}
   }
 
   .qty-val {
-    width: 36px;
+    min-width: 32px;
     text-align: center;
     font-weight: 700;
     color: var(--dark);
     font-size: 0.95rem;
+    padding: 0 4px;
   }
 
   .sub-cell {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 0.75rem;
+    gap: 0.5rem;
   }
 
   .sub-price {
@@ -436,8 +412,8 @@ Daillyfresh{% endblock %} {% block content %}
   }
 
   .remove-btn {
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -449,6 +425,7 @@ Daillyfresh{% endblock %} {% block content %}
     transition:
       background 0.15s,
       color 0.15s;
+    flex-shrink: 0;
   }
 
   .remove-btn:hover {
@@ -493,12 +470,13 @@ Daillyfresh{% endblock %} {% block content %}
     color: #dc2626;
   }
 
+  /* ── Sidebar Cards ── */
   .sidebar-card {
     background: var(--white);
     border: 1px solid var(--border);
     border-radius: 1.5rem;
-    padding: 1.5rem;
-    margin-bottom: 1.25rem;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
     animation: slideUp 0.5s ease both;
   }
 
@@ -506,7 +484,7 @@ Daillyfresh{% endblock %} {% block content %}
     font-weight: 700;
     color: var(--dark);
     font-size: 1rem;
-    margin-bottom: 1.1rem;
+    margin-bottom: 1rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -516,6 +494,7 @@ Daillyfresh{% endblock %} {% block content %}
     color: var(--green-primary);
   }
 
+  /* Address */
   .address-radio {
     display: flex;
     align-items: flex-start;
@@ -538,6 +517,7 @@ Daillyfresh{% endblock %} {% block content %}
   .address-radio input[type="radio"] {
     margin-top: 3px;
     accent-color: var(--green-primary);
+    flex-shrink: 0;
   }
 
   .addr-name {
@@ -549,15 +529,16 @@ Daillyfresh{% endblock %} {% block content %}
   .addr-phone {
     color: var(--text-muted);
     font-weight: 400;
-    margin-left: 0.4rem;
+    margin-left: 0.3rem;
     font-size: 0.82rem;
   }
 
   .addr-street {
     color: var(--text-muted);
     font-size: 0.82rem;
-    margin-top: 0.2rem;
+    margin-top: 0.25rem;
     line-height: 1.5;
+    word-break: break-word;
   }
 
   .add-addr-btn {
@@ -582,7 +563,6 @@ Daillyfresh{% endblock %} {% block content %}
     text-align: center;
     padding: 0.75rem 0;
   }
-
   .no-addr p {
     color: var(--text-muted);
     font-size: 0.88rem;
@@ -657,20 +637,20 @@ Daillyfresh{% endblock %} {% block content %}
     transition: border-color 0.15s;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    min-width: 0;
   }
 
   .coupon-input:focus {
     border-color: var(--green-primary);
     background: #fff;
   }
-
   .coupon-input:disabled {
     opacity: 0.6;
     cursor: not-allowed;
   }
 
   .coupon-apply-btn {
-    padding: 0.65rem 1rem;
+    padding: 0.65rem 0.9rem;
     border-radius: 0.75rem;
     border: none;
     font-weight: 700;
@@ -678,17 +658,16 @@ Daillyfresh{% endblock %} {% block content %}
     cursor: pointer;
     transition: background 0.2s;
     white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .coupon-apply-btn.active {
     background: var(--green-primary);
     color: #fff;
   }
-
   .coupon-apply-btn.active:hover {
     background: var(--dark);
   }
-
   .coupon-apply-btn.inactive {
     background: #e5e7eb;
     color: #9ca3af;
@@ -712,6 +691,7 @@ Daillyfresh{% endblock %} {% block content %}
     border: 1.5px solid #bbf7d0;
     border-radius: 0.75rem;
     padding: 0.7rem 1rem;
+    gap: 0.5rem;
   }
 
   .coupon-code-tag {
@@ -736,6 +716,7 @@ Daillyfresh{% endblock %} {% block content %}
     font-size: 1.2rem;
     transition: color 0.15s;
     padding: 0;
+    flex-shrink: 0;
   }
 
   .coupon-remove-btn:hover {
@@ -755,7 +736,6 @@ Daillyfresh{% endblock %} {% block content %}
     font-weight: 500;
     color: var(--dark);
   }
-
   .summary-row .free {
     color: var(--green-primary) !important;
   }
@@ -787,9 +767,8 @@ Daillyfresh{% endblock %} {% block content %}
     color: var(--dark);
     font-size: 1rem;
   }
-
   .summary-total .grand {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     font-weight: 800;
     color: var(--green-primary);
     font-family: "Fraunces", serif;
@@ -816,12 +795,10 @@ Daillyfresh{% endblock %} {% block content %}
   .btn-place.active {
     background: var(--green-primary);
   }
-
   .btn-place.active:hover {
     background: var(--dark);
     transform: translateY(-1px);
   }
-
   .btn-place.disabled {
     background: #d1d5db;
     cursor: not-allowed;
@@ -847,6 +824,8 @@ Daillyfresh{% endblock %} {% block content %}
     max-width: 500px;
     overflow: hidden;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    max-height: 90vh;
+    overflow-y: auto;
   }
 
   .modal-head {
@@ -856,6 +835,9 @@ Daillyfresh{% endblock %} {% block content %}
     padding: 1.25rem 1.5rem;
     background: var(--cream);
     border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 1;
   }
 
   .modal-head h3 {
@@ -929,7 +911,6 @@ Daillyfresh{% endblock %} {% block content %}
     border-color: var(--green-primary);
     background: #fff;
   }
-
   .form-group textarea {
     resize: none;
   }
@@ -944,7 +925,6 @@ Daillyfresh{% endblock %} {% block content %}
   .checkbox-row input {
     accent-color: var(--green-primary);
   }
-
   .checkbox-row label {
     font-size: 0.88rem;
     color: var(--text-muted);
@@ -976,7 +956,6 @@ Daillyfresh{% endblock %} {% block content %}
       opacity: 0;
       transform: translateY(16px);
     }
-
     to {
       opacity: 1;
       transform: translateY(0);
@@ -989,40 +968,213 @@ Daillyfresh{% endblock %} {% block content %}
     }
   }
 
-  @media (max-width: 900px) {
+  /* ══ TABLET ══ */
+  @media (max-width: 1024px) {
     .cart-layout {
       flex-direction: column;
     }
-
     .cart-aside {
       width: 100%;
     }
   }
 
+  /* ══ MOBILE ══ */
   @media (max-width: 640px) {
+    /* Section spacing */
+    .cart-section {
+      padding: 4.5rem 0 3rem;
+    }
+    .container {
+      padding: 0 0.85rem;
+    }
+
+    /* Page header */
+    .page-header {
+      margin-bottom: 1rem;
+    }
+    .page-header h1 {
+      font-size: 1.5rem;
+    }
+    .page-header p {
+      font-size: 0.85rem;
+    }
+
+    /* ── Cart Table Redesign for Mobile ── */
+    .cart-table {
+      border-radius: 1.1rem;
+    }
     .table-head {
       display: none;
     }
 
+    /* Use flex wrap to make items stack beautifully */
     .cart-row {
-      grid-template-columns: 1fr;
-      gap: 0.75rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      padding: 1.25rem 1rem;
+      border-bottom: 1px solid var(--border);
     }
 
-    .qty-cell {
-      justify-content: flex-start;
+    /* Product image and title take full width at the top */
+    .product-cell {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px dashed var(--border);
     }
 
-    .sub-cell {
-      justify-content: space-between;
+    .product-img {
+      width: 76px;
+      height: 76px;
+      border-radius: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .product-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .product-info h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      white-space: normal; /* Fixes the text cut-off/squishing issue */
+      line-height: 1.3;
+    }
+
+    .product-info .unit {
+      font-size: 0.85rem;
+      display: block;
     }
 
     .product-info .price-mob {
       display: block;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--green-primary);
+      margin-top: 0.4rem;
     }
 
-    .page-header h1 {
-      font-size: 1.9rem;
+    /* Quantity and Subtotal split the bottom row */
+    .qty-cell {
+      flex: 0 0 auto;
+    }
+
+    .sub-cell {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 1rem;
+      border-top: none;
+      padding-top: 0;
+      margin-top: 0;
+    }
+
+    .sub-price {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--green-primary);
+    }
+
+    .qty-btn {
+      width: 32px;
+      height: 32px;
+      font-size: 0.95rem;
+    }
+    .qty-val {
+      min-width: 30px;
+      font-size: 0.95rem;
+    }
+
+    /* ── Cart Footer ── */
+    .cart-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.85rem 1rem;
+      gap: 1rem;
+    }
+
+    .back-link {
+      font-size: 0.82rem;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .clear-btn {
+      font-size: 0.82rem;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar-card {
+      padding: 1rem;
+      border-radius: 1.1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .sidebar-card h3 {
+      font-size: 0.95rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .addr-name {
+      font-size: 0.85rem;
+    }
+    .addr-phone {
+      font-size: 0.8rem;
+    }
+    .addr-street {
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+
+    /* Coupon */
+    .coupon-input {
+      font-size: 0.83rem;
+      padding: 0.6rem 0.8rem;
+    }
+    .coupon-apply-btn {
+      font-size: 0.82rem;
+      padding: 0.6rem 0.85rem;
+    }
+
+    /* Summary */
+    .summary-row {
+      font-size: 0.87rem;
+    }
+    .summary-total .grand {
+      font-size: 1.3rem;
+    }
+    .btn-place {
+      font-size: 0.95rem;
+      padding: 0.9rem;
+      border-radius: 0.85rem;
+    }
+
+    /* Modal — bottom sheet */
+    .modal-overlay {
+      align-items: flex-end;
+      padding: 0;
+    }
+    .modal-box {
+      border-radius: 1.5rem 1.5rem 0 0;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-body {
+      padding: 1rem;
+    }
+    .form-row {
+      grid-template-columns: 1fr;
     }
   }
 </style>
@@ -1112,7 +1264,6 @@ Daillyfresh{% endblock %} {% block content %}
 }"
 >
   <div class="container">
-    <!-- EMPTY STATE -->
     <div
       x-show="$store.cart.items.length === 0"
       style="display: none"
@@ -1371,7 +1522,6 @@ Daillyfresh{% endblock %} {% block content %}
       </div>
     </div>
 
-    <!-- CART WITH ITEMS -->
     <div x-show="$store.cart.items.length > 0" style="display: none">
       <div class="page-header">
         <h1>Shopping Cart</h1>
@@ -1379,7 +1529,6 @@ Daillyfresh{% endblock %} {% block content %}
       </div>
 
       <div class="cart-layout">
-        <!-- LEFT: Product Table -->
         <div class="cart-main">
           <div class="cart-table">
             <div class="table-head">
@@ -1396,8 +1545,11 @@ Daillyfresh{% endblock %} {% block content %}
                     </div>
                     <div class="product-info">
                       <h3 x-text="item.name"></h3>
-                      <span class="unit" x-text="item.unit"></span>
-                      <span class="price-mob" x-text="`₹${item.price}`"></span>
+                      <span class="unit" x-text="`Qty: ${item.unit}`"></span>
+                      <span
+                        class="price-mob"
+                        x-text="`₹${parseFloat(item.price).toFixed(2)}`"
+                      ></span>
                     </div>
                   </div>
                   <div class="qty-cell">
@@ -1420,12 +1572,12 @@ Daillyfresh{% endblock %} {% block content %}
                   <div class="sub-cell">
                     <span
                       class="sub-price"
-                      x-text="`₹${(item.price * item.quantity).toFixed(2)}`"
+                      x-text="`₹${(parseFloat(item.price) * item.quantity).toFixed(2)}`"
                     ></span>
                     <button
                       class="remove-btn"
                       @click="$store.cart.remove(item.id)"
-                      title="Remove"
+                      title="Remove item"
                     >
                       <i class="ri-delete-bin-line"></i>
                     </button>
@@ -1444,9 +1596,7 @@ Daillyfresh{% endblock %} {% block content %}
           </div>
         </div>
 
-        <!-- RIGHT: Sidebar -->
         <div class="cart-aside">
-          <!-- DELIVERY ADDRESS CARD -->
           <div class="sidebar-card">
             <h3><i class="ri-map-pin-2-fill"></i> Delivery Address</h3>
             {% if not user.is_authenticated %}
@@ -1470,9 +1620,18 @@ Daillyfresh{% endblock %} {% block content %}
                 value="{{ address.id }}"
                 x-model="selectedAddress"
               />
-              <div>
-                <span class="addr-name">{{ address.full_name }}</span>
-                <span class="addr-phone">{{ address.phone_number }}</span>
+              <div style="min-width: 0; flex: 1">
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    gap: 0.25rem;
+                  "
+                >
+                  <span class="addr-name">{{ address.full_name }}</span>
+                  <span class="addr-phone">{{ address.phone_number }}</span>
+                </div>
                 <p class="addr-street">
                   {{ address.street_address }}, {{ address.city }}, {{
                   address.state }} - {{ address.pincode }}
@@ -1493,12 +1652,9 @@ Daillyfresh{% endblock %} {% block content %}
             {% endif %} {% endif %}
           </div>
 
-          <!-- COUPON CARD (only for logged in users) -->
           {% if user.is_authenticated %}
           <div class="sidebar-card">
             <h3><i class="ri-coupon-3-fill"></i> Coupon / Promo Code</h3>
-
-            <!-- Input: show when NO coupon applied -->
             <div x-show="!coupon">
               <div class="coupon-input-wrap">
                 <input
@@ -1536,8 +1692,6 @@ Daillyfresh{% endblock %} {% block content %}
                 <i class="ri-error-warning-line"></i>
               </p>
             </div>
-
-            <!-- Badge: show when coupon IS applied -->
             <div x-show="coupon" style="display: none">
               <div class="coupon-applied-badge">
                 <div>
@@ -1547,7 +1701,7 @@ Daillyfresh{% endblock %} {% block content %}
                       <span x-text="`${coupon.value}% off applied!`"></span>
                     </template>
                     <template x-if="coupon && coupon.type === 'Fixed'">
-                      <span x-text="`Rs.${coupon.value} off applied!`"></span>
+                      <span x-text="`₹${coupon.value} off applied!`"></span>
                     </template>
                   </p>
                 </div>
@@ -1563,7 +1717,6 @@ Daillyfresh{% endblock %} {% block content %}
           </div>
           {% endif %}
 
-          <!-- ORDER SUMMARY CARD -->
           <div class="sidebar-card">
             <h3>Order Summary</h3>
             <div class="summary-row">
@@ -1584,13 +1737,12 @@ Daillyfresh{% endblock %} {% block content %}
               class="free-hint"
               style="display: none"
             >
-              Add Rs.<span
+              Add ₹<span
                 x-text="(500 - $store.cart.subtotal).toFixed(2)"
               ></span>
               more for free delivery!
             </div>
 
-            <!-- Discount row -->
             <template x-if="coupon">
               <div>
                 <div
@@ -1602,7 +1754,7 @@ Daillyfresh{% endblock %} {% block content %}
                     Discount (<span x-text="coupon.code"></span>)
                   </span>
                   <span style="color: var(--green-primary); font-weight: 700">
-                    -Rs.<span x-text="discountAmount.toFixed(2)"></span>
+                    -₹<span x-text="discountAmount.toFixed(2)"></span>
                   </span>
                 </div>
                 <div
@@ -1618,7 +1770,7 @@ Daillyfresh{% endblock %} {% block content %}
                     border: 1px solid #fecaca;
                   "
                 >
-                  Add Rs.<span
+                  Add ₹<span
                     x-text="(coupon.min_order_amount - $store.cart.subtotal).toFixed(2)"
                   ></span>
                   more to use <b x-text="coupon.code"></b>.
@@ -1641,16 +1793,16 @@ Daillyfresh{% endblock %} {% block content %}
             >
               <template x-if="!isProcessing"><span>Place Order</span></template>
               <template x-if="isProcessing">
-                <span
-                  ><i
+                <span>
+                  <i
                     class="ri-loader-4-line"
                     style="
                       animation: spin 0.8s linear infinite;
                       display: inline-block;
                     "
                   ></i>
-                  Processing...</span
-                >
+                  Processing...
+                </span>
               </template>
             </button>
             {% else %}
@@ -1664,7 +1816,6 @@ Daillyfresh{% endblock %} {% block content %}
     </div>
   </div>
 
-  <!-- ADD ADDRESS MODAL -->
   <div
     x-show="showAddressModal"
     style="display: none"

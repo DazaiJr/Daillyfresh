@@ -2,7 +2,7 @@
 
 <section
   id="home"
-  class="relative w-full h-[600px] md:h-[700px] overflow-hidden"
+  class="relative w-full h-[65vh] md:h-[75vh] lg:h-screen overflow-hidden"
   x-data="{
     activeSlide: {{ slides.0.id }},
     slides: [
@@ -37,7 +37,7 @@
       x-transition:leave="transition transform duration-1000 ease-in-out"
       x-transition:leave-start="opacity-100 scale-100"
       x-transition:leave-end="opacity-0 scale-100"
-      class="absolute inset-0 w-full h-full bg-cover bg-center"
+      class="absolute inset-0 w-full h-full bg-cover bg-[center_top] md:bg-center"
       :style="`background-image: url('${slide.image}');`"
     >
       <div
@@ -294,35 +294,49 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <template x-for="product in products" :key="product.id">
-                <div class="bg-white rounded-3xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 group relative border border-gray-100 flex flex-col items-center text-center">
+                <div class="bg-white rounded-3xl p-4 shadow-sm hover:shadow-xl transition-all duration-300 group border border-gray-200 flex flex-col relative text-left">
                     
-                    <div x-show="product.badge" class="absolute top-4 right-4 bg-[#FFC107] text-[#0a2f15] text-xs font-bold px-3 py-1 rounded-full z-10" x-text="product.badge"></div>
+                    <div x-show="product.badge" style="display: none;" class="absolute top-6 right-6 bg-[#FFC107] text-[#0a2f15] text-xs font-bold px-3 py-1 rounded-full z-10" x-text="product.badge"></div>
 
-                    <div class="relative w-full h-64 flex items-center justify-center mb-4 overflow-hidden rounded-2xl">
-                        <img :src="product.image" :alt="product.name" class="h-56 w-auto object-contain transition-transform duration-500 group-hover:scale-110">
+                    <div class="w-full h-56 md:h-64 rounded-2xl overflow-hidden mb-4 flex items-center justify-center relative bg-white">
+                        <img :src="product.image" :alt="product.name" class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105">
                         
                         <div class="absolute inset-0 bg-black/5 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
-                            <button @click="selectedProduct = product; openModal = true" 
-                                    class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#0a2f15] hover:bg-[#16a34a] hover:text-white transition-all shadow-lg transform hover:-translate-y-1" title="Quick View">
+                            <button @click="selectedProduct = product; openModal = true" class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#0a2f15] hover:bg-[#16a34a] hover:text-white transition-all shadow-lg transform hover:-translate-y-1" title="Quick View">
                                 <i class="ri-eye-line text-xl"></i>
-                            </button>
-                            <button class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#0a2f15] hover:bg-[#16a34a] hover:text-white transition-all shadow-lg transform hover:-translate-y-1" title="Add to Wishlist">
-                                <i class="ri-heart-line text-xl"></i>
                             </button>
                         </div>
                     </div>
 
-                    <h3 class="text-xl font-bold text-[#0a2f15] mb-2" x-text="product.name"></h3>
-                    <p class="text-gray-500 text-sm mb-4 line-clamp-2" x-text="product.description"></p>
-                    
-                    <div class="mb-6">
-                        <span class="text-2xl font-bold text-[#16a34a]" x-text="product.price"></span>
-                        <span class="text-sm text-gray-400 font-normal" x-text="product.unit"></span>
-                    </div>
+                    <div class="flex flex-col flex-grow px-1">
+                        <span class="text-sm font-semibold text-gray-500 mb-1" x-text="`Qty: ${product.unit}`"></span>
+                        
+                        <h3 class="text-xl md:text-2xl font-extrabold text-[#163321] mb-1.5 leading-tight line-clamp-1" x-text="product.name"></h3>
+                        
+                        <p class="text-gray-600 text-sm leading-snug mb-4 line-clamp-2" x-text="product.description"></p>
+                        
+                        <div class="flex items-center justify-between mt-auto mb-5">
+                            <div class="flex items-baseline gap-1.5">
+                                <span class="text-2xl font-extrabold text-[#163321]" x-text="product.price"></span>
+                                <span class="text-sm font-semibold text-gray-500 line-through" x-text="product.price"></span>
+                            </div>
+                            
+                            <div class="flex items-center gap-1.5">
+                                <div class="flex text-[#F59E0B] text-[11px] gap-0.5">
+                                    <i class="ri-star-fill"></i>
+                                    <i class="ri-star-fill"></i>
+                                    <i class="ri-star-fill"></i>
+                                    <i class="ri-star-fill"></i>
+                                    <i class="ri-star-fill"></i>
+                                </div>
+                                <span class="text-[10px] md:text-xs font-semibold text-gray-600" x-text="`${product.reviews} reviews`"></span>
+                            </div>
+                        </div>
 
-                    <button @click="$store.cart.add({id: product.id, name: product.name, price: product.price.replace('₹', ''), image: product.image, unit: product.unit})" class="w-full bg-[#0a2f15] text-white py-3 rounded-full font-bold hover:bg-[#16a34a] transition-colors flex items-center justify-center gap-2 text-sm z-20 relative">
-                        <i class="ri-shopping-cart-fill"></i> Add to Cart
-                    </button>
+                        <button @click="$store.cart.add({id: product.id, name: product.name, price: product.price.replace('₹', ''), image: product.image, unit: product.unit})" class="w-full bg-[#B2E142] text-[#163321] py-3 rounded-2xl font-extrabold text-[15px] hover:bg-[#9DCA36] transition-colors flex items-center justify-center z-20 relative shadow-sm">
+                            Add to Cart
+                        </button>
+                    </div>
                 </div>
             </template>
         </div>
@@ -374,7 +388,7 @@
 
                 <div class="flex items-end gap-2 mb-6">
                     <span class="text-4xl font-bold text-[#16a34a]" x-text="selectedProduct.price"></span>
-                    <span class="text-lg text-gray-400 mb-1" x-text="selectedProduct.unit"></span>
+                    <span class="text-lg text-gray-400 mb-1" x-text="`Qty: ${selectedProduct.unit}`"></span>
                 </div>
 
                 <p class="text-gray-600 leading-relaxed mb-8" x-text="selectedProduct.description + ' Sourced directly from healthy, well-cared cattle. No preservatives, no adulteration. Pure freshness guaranteed.'"></p>

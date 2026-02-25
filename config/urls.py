@@ -3,8 +3,7 @@ from django.urls import path, include
 from core.views import (
     home, signup_view, login_view, logout_view,
     cart_page, add_address, place_order,
-    apply_affiliate_coupon, remove_coupon,
-    apply_coupon,
+    apply_affiliate_coupon, remove_coupon, apply_coupon
 )
 from django.conf import settings
 from django.conf.urls.static import static
