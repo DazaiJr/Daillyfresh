@@ -8,10 +8,10 @@ from cloudinary.models import CloudinaryField
 
 # Create your models here.
 class HomeHero(models.Model):
-    title = models.CharField(max_length=200)
-    subtitle = models.CharField(max_length=300)
-    # image = models.ImageField(upload_to='hero/')
-    image = CloudinaryField('image')
+    title = models.CharField(max_length=200, blank=True, default='')
+    subtitle = models.CharField(max_length=300, blank=True, default='')
+    image = models.ImageField(upload_to='hero/')
+    # image = CloudinaryField('image')
     show_button = models.BooleanField(default=True)
     order = models.IntegerField(default=0)
 
@@ -28,13 +28,15 @@ class Product(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     unit = models.CharField(max_length=50, help_text="e.g., 1000 ml, 500 gm")
-    # image = models.ImageField(upload_to='products/')
-    image = CloudinaryField('image')
+    image = models.ImageField(upload_to='products/')
+    # image = CloudinaryField('image')
     rating = models.DecimalField(max_digits=3, decimal_places=2, default=5.0)
     # is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     reviews_count = models.IntegerField(default=5)
     badge = models.CharField(max_length=50, blank=True, null=True, help_text="e.g., 'Best Seller', 'New Arrival'")
+    badge_color = models.CharField(max_length=7, blank=True, null=True, help_text="Hex color e.g. #FFC107")
+    badge_text_color = models.CharField(max_length=7, blank=True, null=True, help_text="Hex color e.g. #000000")
     # updated_at = models.DateTimeField(auto_now=True)
     
     class Meta:
@@ -46,8 +48,8 @@ class Product(models.Model):
         return self.name
 
 class PartnerLogo(models.Model):
-    # image = models.ImageField(upload_to='partners/')
-    image = CloudinaryField('image')
+    image = models.ImageField(upload_to='partners/')
+    # image = CloudinaryField('image')
     order = models.PositiveIntegerField(default=0, help_text="Display order")
 
     class Meta:
