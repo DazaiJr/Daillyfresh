@@ -462,63 +462,36 @@
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto">
-      
-      <div class="bg-white p-8 rounded-3xl border-2 border-[#16a34a]/20 shadow-lg relative animate-fade-in-up">
-        
-        <i class="ri-double-quotes-l text-5xl text-[#16a34a]/20 absolute top-6 right-8"></i>
-        
-        <p class="text-gray-600 italic text-lg leading-relaxed mb-8">
-          “As a professional swimmer, I need strength, stamina, and clean
-          nutrition every single day. Daillyfresh milk and Power Eggs have
-          become an essential part of my diet — fresh, pure, and full of energy.”
+      {% for t in testimonials %}
+      <div class="{% if t.is_dark_card %}bg-[#0a2f15]{% else %}bg-white border-2 border-[#16a34a]/20{% endif %} p-8 rounded-3xl shadow-xl relative animate-fade-in-up">
+
+        <i class="ri-double-quotes-l text-5xl {% if t.is_dark_card %}text-[#84cc16]/20{% else %}text-[#16a34a]/20{% endif %} absolute top-6 right-8"></i>
+
+        <p class="{% if t.is_dark_card %}text-green-100/90{% else %}text-gray-600{% endif %} italic text-lg leading-relaxed mb-8">
+          "{{ t.feedback }}"
         </p>
-        
+
         <div class="flex items-center gap-4">
-          <div class="w-16 h-16 bg-gray-200 rounded-full overflow-hidden shrink-0">
-            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Akshata" class="w-full h-full object-cover" />
+          <div class="w-16 h-16 {% if t.is_dark_card %}bg-[#16a34a]{% else %}bg-gray-200{% endif %} rounded-full overflow-hidden shrink-0">
+            <img src="{{ t.image.url }}" alt="{{ t.name }}" class="w-full h-full object-cover" />
           </div>
           <div>
-            <h4 class="text-xl font-bold text-[#0a2f15]">Akshata K Karapurkar</h4>
-            <p class="text-[#16a34a] font-medium text-sm">National Level Swimmer</p>
-            
+            <h4 class="text-xl font-bold {% if t.is_dark_card %}text-white{% else %}text-[#0a2f15]{% endif %}">{{ t.name }}</h4>
+            <p class="{% if t.is_dark_card %}text-[#84cc16]{% else %}text-[#16a34a]{% endif %} font-medium text-sm">{{ t.occupation }}</p>
+
             <div class="flex gap-1 text-[#FFC107] mt-1 text-sm">
-                <i class="ri-star-fill"></i>
-                <i class="ri-star-fill"></i>
-                <i class="ri-star-fill"></i>
-                <i class="ri-star-fill"></i>
-                <i class="ri-star-fill"></i>
+              {% for i in "12345" %}
+                {% if forloop.counter <= t.stars %}
+                  <i class="ri-star-fill"></i>
+                {% else %}
+                  <i class="ri-star-line"></i>
+                {% endif %}
+              {% endfor %}
             </div>
           </div>
         </div>
       </div>
-
-      <div class="bg-[#0a2f15] p-8 rounded-3xl shadow-xl relative animate-fade-in-up" style="animation-delay: 0.2s">
-        
-        <i class="ri-double-quotes-l text-5xl text-[#84cc16]/20 absolute top-6 right-8"></i>
-        
-        <p class="text-green-100/90 italic text-lg leading-relaxed mb-8">
-          “For me, beauty is not just about looks, it’s about health. Daillyfresh dairy products fit perfectly into my lifestyle — the milk is pure, the dahi is creamy, and it makes me feel fresh every day.”
-        </p>
-        
-        <div class="flex items-center gap-4">
-          <div class="w-16 h-16 bg-[#16a34a] rounded-full overflow-hidden shrink-0">
-            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Shreyada" class="w-full h-full object-cover" />
-          </div>
-          <div>
-            <h4 class="text-xl font-bold text-white">Shreyada Raje</h4>
-            <p class="text-[#84cc16] font-medium text-sm">Miss Universe India (Top 20)</p>
-            
-            <div class="flex gap-1 text-[#FFC107] mt-1 text-sm">
-                <i class="ri-star-fill"></i>
-                <i class="ri-star-fill"></i>
-                <i class="ri-star-fill"></i>
-                <i class="ri-star-fill"></i>
-                <i class="ri-star-fill"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      {% endfor %}
     </div>
   </div>
 </section>

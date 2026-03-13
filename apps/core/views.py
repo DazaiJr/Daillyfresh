@@ -16,7 +16,8 @@ def home(request):
     slides = HomeHero.objects.order_by('order')
     products = Product.objects.all()
     partner_logos = PartnerLogo.objects.all()
-    return render(request, 'index.html', {'slides': slides, 'products': products, 'partner_logos': partner_logos})
+    testimonials = Testimonial.objects.filter(is_active=True)
+    return render(request, 'index.html', {'slides': slides, 'products': products, 'partner_logos': partner_logos, 'testimonials': testimonials})
 
 
 # --- Authentication Views ---
