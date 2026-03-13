@@ -10,8 +10,8 @@ from cloudinary.models import CloudinaryField
 class HomeHero(models.Model):
     title = models.CharField(max_length=200)
     subtitle = models.CharField(max_length=300)
-    # image = models.ImageField(upload_to='hero/')
-    image = CloudinaryField('image')
+    image = models.ImageField(upload_to='hero/')
+    # image = CloudinaryField('image')
     show_button = models.BooleanField(default=True)
     order = models.IntegerField(default=0)
 
@@ -28,8 +28,8 @@ class Product(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     unit = models.CharField(max_length=50, help_text="e.g., 1000 ml, 500 gm")
-    # image = models.ImageField(upload_to='products/')
-    image = CloudinaryField('image')
+    image = models.ImageField(upload_to='products/')
+    # image = CloudinaryField('image')
     rating = models.DecimalField(max_digits=3, decimal_places=2, default=5.0)
     # is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
