@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from django.conf import settings
-from .models import HomeHero, Product, Address, Order, OrderItem, Coupon
+from .models import HomeHero, Product, Address, Order, OrderItem, Coupon, PartnerLogo
 
 admin.site.register(HomeHero)
 admin.site.register(Product)
@@ -131,4 +131,10 @@ class CouponAdmin(admin.ModelAdmin):
         )
 
     promo_url_display.short_description = 'Promo URL (Copy & Share)'
-    promo_url_display.allow_tags = True 
+    promo_url_display.allow_tags = True
+    
+
+@admin.register(PartnerLogo)
+class PartnerLogoAdmin(admin.ModelAdmin):
+    list_display = ('id', 'order', 'image')
+    list_editable = ('order',)

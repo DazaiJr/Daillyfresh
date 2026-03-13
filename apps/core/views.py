@@ -15,7 +15,8 @@ from .models import *
 def home(request):
     slides = HomeHero.objects.order_by('order')
     products = Product.objects.all()
-    return render(request, 'index.html', {'slides': slides, 'products': products})
+    partner_logos = PartnerLogo.objects.all()
+    return render(request, 'index.html', {'slides': slides, 'products': products, 'partner_logos': partner_logos})
 
 
 # --- Authentication Views ---

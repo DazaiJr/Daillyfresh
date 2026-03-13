@@ -299,7 +299,7 @@
                     <div x-show="product.badge" style="display: none;" class="absolute top-6 right-6 bg-[#FFC107] text-[#0a2f15] text-xs font-bold px-3 py-1 rounded-full z-10" x-text="product.badge"></div>
 
                     <div class="w-full h-56 md:h-64 rounded-2xl overflow-hidden mb-4 flex items-center justify-center relative bg-white">
-                        <img :src="product.image" :alt="product.name" class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105">
+                        <img :src="product.image" :alt="product.name" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
                         
                         <div class="absolute inset-0 bg-black/5 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
                             <button @click="selectedProduct = product; openModal = true" class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-[#0a2f15] hover:bg-[#16a34a] hover:text-white transition-all shadow-lg transform hover:-translate-y-1" title="Quick View">
@@ -368,7 +368,7 @@
 
             <div class="w-full md:w-1/2 bg-[#f3f4f6] flex items-center justify-center p-8 relative">
                 <div x-show="selectedProduct.badge" class="absolute top-6 left-6 bg-[#FFC107] text-[#0a2f15] text-sm font-bold px-4 py-1 rounded-full shadow-sm" x-text="selectedProduct.badge"></div>
-                <img :src="selectedProduct.image" :alt="selectedProduct.name" class="w-full max-w-xs object-contain drop-shadow-xl">
+                <img :src="selectedProduct.image" :alt="selectedProduct.name" class="w-full max-w-xs object-contain drop-shadow-xl rounded-xl">
             </div>
 
             <div class="w-full md:w-1/2 p-8 md:p-12 overflow-y-auto">
@@ -413,29 +413,26 @@
             Also Available On
         </h3>
     </div>
-    
+
+    {% if partner_logos %}
     <div class="relative w-full">
         <div class="absolute inset-y-0 left-0 w-16 md:w-32 bg-gradient-to-r from-[#f3f4f6] to-transparent z-10 pointer-events-none"></div>
         <div class="absolute inset-y-0 right-0 w-16 md:w-32 bg-gradient-to-l from-[#f3f4f6] to-transparent z-10 pointer-events-none"></div>
 
         <div class="flex items-center gap-16 md:gap-24 animate-marquee whitespace-nowrap min-w-full py-2">
             
-            <img src="{% static 'images/partner-zepto.png' %}" alt="Zepto" class="h-10 md:h-14 w-auto object-contain">
-            <img src="{% static 'images/partner-blinkit.png' %}" alt="Blinkit" class="h-10 md:h-14 w-auto object-contain">
-            <img src="{% static 'images/partner-bb.png' %}" alt="bb" class="h-10 md:h-14 w-auto object-contain">
-            <img src="{% static 'images/partner-freshtohome.png' %}" alt="FreshToHome" class="h-10 md:h-14 w-auto object-contain">
-            <img src="{% static 'images/partner-countrydelight.png' %}" alt="Country Delight" class="h-10 md:h-14 w-auto object-contain">
+            {% for logo in partner_logos %}
+                <img src="{{ logo.image.url }}" alt="Partner" class="h-10 md:h-14 w-auto object-contain">
+            {% endfor %}
 
-            <img src="{% static 'images/partner-zepto.png' %}" alt="Zepto" class="h-10 md:h-14 w-auto object-contain">
-            <img src="{% static 'images/partner-blinkit.png' %}" alt="Blinkit" class="h-10 md:h-14 w-auto object-contain">
-            <img src="{% static 'images/partner-bb.png' %}" alt="bb" class="h-10 md:h-14 w-auto object-contain">
-            <img src="{% static 'images/partner-freshtohome.png' %}" alt="FreshToHome" class="h-10 md:h-14 w-auto object-contain">
-            <img src="{% static 'images/partner-countrydelight.png' %}" alt="Country Delight" class="h-10 md:h-14 w-auto object-contain">
-            
-            <img src="{% static 'images/partner-zepto.png' %}" alt="Zepto" class="h-10 md:h-14 w-auto object-contain">
-            <img src="{% static 'images/partner-blinkit.png' %}" alt="Blinkit" class="h-10 md:h-14 w-auto object-contain">
+            {% comment %} Duplicate for seamless loop {% endcomment %}
+            {% for logo in partner_logos %}
+                <img src="{{ logo.image.url }}" alt="Partner" class="h-10 md:h-14 w-auto object-contain">
+            {% endfor %}
+
         </div>
     </div>
+    {% endif %}
 </section>
 
 <section id="testimonials" class="py-24 bg-white relative">
