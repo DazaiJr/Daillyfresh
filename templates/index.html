@@ -40,8 +40,11 @@
       class="absolute inset-0 w-full h-full bg-cover bg-[center_top] md:bg-center"
       :style="`background-image: url('${slide.image}');`"
     >
-      <div
+      {% comment %} <div
         class="absolute inset-0 bg-black/40 bg-gradient-to-r from-black/70 to-transparent"
+      ></div> {% endcomment %}
+      <div
+        class="absolute inset-0"
       ></div>
 
       <div class="absolute inset-0 flex items-center">
@@ -91,7 +94,7 @@
           class="absolute inset-0 bg-[#84cc16]/20 rounded-3xl transform translate-x-4 translate-y-4"
         ></div>
         <img
-          src="{% static 'images/about-farmer.png' %}"
+          src="https://res.cloudinary.com/do0uglmwm/image/upload/v1773480393/About_us_image_hkx4my.jpg"
           alt="Daillyfresh Farmer"
           class="rounded-3xl shadow-xl relative z-10 w-full object-cover h-[400px] md:h-[500px]"
         />
@@ -439,12 +442,12 @@
         <div class="flex items-center gap-16 md:gap-24 animate-marquee whitespace-nowrap min-w-full py-2">
             
             {% for logo in partner_logos %}
-                <img src="{{ logo.image.url }}" alt="Partner" class="h-10 md:h-14 w-auto object-contain">
+                <img src="{{ logo.image.url }}" alt="Partner" class="h-16 md:h-22 w-auto object-contain">
             {% endfor %}
 
             {% comment %} Duplicate for seamless loop {% endcomment %}
             {% for logo in partner_logos %}
-                <img src="{{ logo.image.url }}" alt="Partner" class="h-10 md:h-14 w-auto object-contain">
+                <img src="{{ logo.image.url }}" alt="Partner" class="h-16 md:h-22 w-auto object-contain">
             {% endfor %}
 
         </div>
