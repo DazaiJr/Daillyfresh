@@ -72,24 +72,25 @@
         -webkit-backdrop-filter: blur(12px);
         border-bottom: 1px solid rgba(22, 163, 74, 0.12);
         box-shadow: 0 2px 16px rgba(0, 0, 0, 0.07);
-        transition:
+        {% comment %} transition:
           background 0.3s,
           box-shadow 0.3s,
-          border-color 0.3s;
+          border-color 0.3s; {% endcomment %}
       }
 
       /* Transparent mode on home hero */
-      .header-transparent .site-header {
+      {% comment %} .header-transparent .site-header {
         background: rgba(0, 0, 0, 0.18);
         border-bottom-color: rgba(255, 255, 255, 0.12);
         box-shadow: none;
-      }
+      } {% endcomment %}
 
       .header-inner {
         max-width: 1280px;
         margin: 0 auto;
         padding: 0 1.5rem;
-        height: 68px;
+        {% comment %} height: 68px; {% endcomment %}
+        height: 80px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -340,13 +341,7 @@
   >
     <!-- ══ HEADER ══ -->
     <header
-      x-data="{ mobileMenuOpen: false, scrolled: false, isHome: true }"
-      x-init="
-        isHome = (window.location.pathname === '/' || window.location.pathname === '/home/' || window.location.pathname === '');
-        if (!isHome) scrolled = true;
-      "
-      @scroll.window="if(isHome) scrolled = window.pageYOffset > 30"
-      :class="(!scrolled && isHome) ? 'header-transparent' : ''"
+      x-data="{ mobileMenuOpen: false}"
       class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
     >
       <div class="site-header w-full">
