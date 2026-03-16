@@ -278,13 +278,16 @@ Daillyfresh{% endblock %} {% block content %}
     display: grid;
     grid-template-columns: minmax(200px, 1fr) 140px 120px;
     padding: 1rem 1.5rem;
-    background: var(--cream);
     border-bottom: 1px solid var(--border);
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--text-muted);
+    {% comment %} background: var(--cream); {% endcomment %}
+    {% comment %} color: var(--text-muted); {% endcomment %}
+
+    background: var(--green-primary);
+    color: #fff
   }
 
   .th-qty,
@@ -438,7 +441,9 @@ Daillyfresh{% endblock %} {% block content %}
     justify-content: space-between;
     align-items: center;
     padding: 1rem 1.5rem;
-    background: var(--cream);
+    {% comment %} background: var(--cream); {% endcomment %}
+    {% comment %} background: var(--green-primary);
+    color: #fff !important; {% endcomment %}
     border-top: 1px solid var(--border);
   }
 
@@ -1005,6 +1010,7 @@ Daillyfresh{% endblock %} {% block content %}
     }
     .table-head {
       display: none;
+
     }
 
     /* Use flex wrap to make items stack beautifully */
