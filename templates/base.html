@@ -86,15 +86,32 @@
       } {% endcomment %}
 
       .header-inner {
-        max-width: 1280px;
-        margin: 0 auto;
+        width: 100%;
         padding: 0 1.5rem;
         {% comment %} height: 68px; {% endcomment %}
         height: 80px;
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
+        justify-content: flex-start;
+        gap: 2rem;
+      }
+
+      .header-logo {
+        flex-shrink: 0;
+      }
+
+      .header-nav-wrapper {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-shrink: 0;
       }
 
       /* Nav link underline animation */
@@ -347,50 +364,54 @@
       <div class="site-header w-full">
         <div class="header-inner">
           <!-- Logo -->
-          <a href="/" class="flex items-center flex-shrink-0">
+          <a href="/" class="header-logo flex items-center">
             <img
               src="{% static 'images/logo.png' %}"
               alt="Daillyfresh Logo"
               class="h-12 w-auto object-contain"
             />
+            <span class="text-xl font-semibold ml-2">Daillyfresh</span>
           </a>
 
-          <!-- Desktop Nav -->
-          <nav class="nav-desktop items-center gap-1">
-            <a
-              href="/#home"
-              class="nav-link"
-              :class="(!scrolled && isHome) ? 'nav-link-white' : ''"
-              >Home</a
-            >
-            <a
-              href="/#about"
-              class="nav-link"
-              :class="(!scrolled && isHome) ? 'nav-link-white' : ''"
-              >About Us</a
-            >
-            <a
-              href="/#process"
-              class="nav-link"
-              :class="(!scrolled && isHome) ? 'nav-link-white' : ''"
-              >Our Process</a
-            >
-            <a
-              href="/#products"
-              class="nav-link"
-              :class="(!scrolled && isHome) ? 'nav-link-white' : ''"
-              >Products</a
-            >
-            <a
-              href="#contact"
-              class="nav-link"
-              :class="(!scrolled && isHome) ? 'nav-link-white' : ''"
-              >Contact</a
-            >
-          </nav>
+          <!-- Navigation and Actions Wrapper -->
+          <div class="header-nav-wrapper">
+            <!-- Desktop Nav -->
+            <nav class="nav-desktop items-center gap-1">
+              <a
+                href="/#home"
+                class="nav-link"
+                :class="(!scrolled && isHome) ? 'nav-link-white' : ''"
+                >Home</a
+              >
+              <a
+                href="/#about"
+                class="nav-link"
+                :class="(!scrolled && isHome) ? 'nav-link-white' : ''"
+                >About Us</a
+              >
+              <a
+                href="/#process"
+                class="nav-link"
+                :class="(!scrolled && isHome) ? 'nav-link-white' : ''"
+                >Our Process</a
+              >
+              <a
+                href="/#products"
+                class="nav-link"
+                :class="(!scrolled && isHome) ? 'nav-link-white' : ''"
+                >Products</a
+              >
+              <a
+                href="#contact"
+                class="nav-link"
+                :class="(!scrolled && isHome) ? 'nav-link-white' : ''"
+                >Contact</a
+              >
+            </nav>
+          </div>
 
           <!-- Right Side Actions -->
-          <div class="flex items-center gap-2">
+          <div class="header-actions">
             <!-- Cart -->
             <a
               href="{% url 'cart_page' %}"
